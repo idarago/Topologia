@@ -1,0 +1,861 @@
+\documentclass[12pt]{book}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{amssymb}
+\usepackage[activeacute, spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+
+\setcounter{tocdepth}{3}% to get subsubsections in toc
+
+\let\oldtocsection=\tocsection
+
+\let\oldtocsubsection=\tocsubsection
+
+\let\oldtocsubsubsection=\tocsubsubsection
+
+% various theorems, numbered by section
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}[teo]{Proposición}
+\newtheorem{cor}[teo]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{conj}[teo]{Conjetura}
+\newtheorem{obs}[teo]{Observación}
+\newtheorem{defn}[teo]{Definición}
+\newtheorem{ax}[teo]{Axioma}
+\newtheorem{ex}[teo]{Ejemplo}
+
+\newcommand{\bd}[1]{\mathbf{#1}}  % for bolding symbols
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}      % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}}      % for Integers
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\PP}{\mathscr{P}}
+\newcommand{\Rel}{\mathscr{R}}
+\newcommand{\col}[1]{\left[\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\hom}{\mathrm{Hom}}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\mcm}{mcm}
+\DeclareMathOperator{\mcd}{mcd}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\sg}{sg}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\rank}{rk}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\Nil}{Nil}
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\ann}{Ann}
+\def\acts{\curvearrowright}
+\def\stca{\curvearrowleft}
+
+
+
+\begin{document}
+\pagenumbering{roman}\clearpage\tableofcontents\newpage\pagenumbering{arabic}
+
+\chapter{Topología General}
+
+\section{Definiciones Básicas:}
+
+\begin{defn}
+Sea $X$ un conjunto. Una \textbf{topología} $\tau$ sobre $X$ es un subconjunto de $\PP(X)$ tal que:
+\begin{itemize}
+\item Si $U_i\in \tau$ para todo $i\in I$, entonces $\displaystyle\bigcup_{i\in I} U_i \in \tau$.
+\item Si $U_i\in \tau$ para todo $i\in I$ con $I$ finito, entonces $\displaystyle\bigcap_{i\in I} U_i \in \tau$.
+\item $\emptyset\in\tau$ y $X\in\tau$.
+\end{itemize}
+\end{defn}
+
+\begin{obs}
+Si tomo $I=\emptyset$ en el primer ítem, se deduce que $\emptyset\in\tau$ y si tomo $I=\emptyset$ en el segundo ítem, se deduce que $X\in \tau$. Por lo tanto, si podemos pensar en intersecciones/uniones vacías la tercera condición es redundante.
+\end{obs}
+
+\begin{defn}
+Un \textbf{espacio topológico} es un par $(X,\tau)$ donde $\tau$ es una topología sobre $X$. Los elementos de $X$ se llaman \textbf{puntos} y los elementos de $\tau$ se llaman \textbf{abiertos}.
+\end{defn}
+
+\begin{ex}
+Sea $X$ un conjunto y $\tau = \{\emptyset, X\}$. Esta topología es la más chica que se puede definir sobre $X$ y se llama la \textbf{topología indiscreta}. Por otra parte, si tomamos $\tau = \PP(X)$ entonces esta es la topología más grande que se puede definir sobre $X$ y se llama la \textbf{topología discreta}.
+
+Sea $X$ un conjunto y $d$ una métrica (Es decir, una función $d:X\times X\to \RR$ tal que $d(x,y)\geq 0$, $d(x,y)=0$ si y sólo si $x=y$, $d(x,y)=d(y,x)$ y $d(x,y)+d(y,z) \geq d(x,z)$). Esta métrica $d$ nos define una topología $\tau = \{U\in\PP(X) : \forall x\in U \; \exists \varepsilon >0 \text{ tal que } B(x,\varepsilon) \subseteq U\}$ donde $B(x,r)= \{y\in X : d(x,y) < r\}$ es la bola de centro $x$ y radio $r$. Notemos que en esta topología, para todo $x\in X$ y $\varepsilon > 0$, las bolas abiertas $B(x,\varepsilon)$ son abiertas (En efecto, si tomamos $y\in B(x,\varepsilon)$, debemos tomar $B(y,r)$ con $r< \varepsilon - d(x,y)$ y ver, usando la desigualdad triangular, que en efecto queda contenida en $B(x,\varepsilon)$).
+
+Si $(X,\tau)$ es un espacio topológico y $X'\subseteq X$ es un subconjunto, entonces podemos definir $\tau' = \{U\cap X' : U\in \tau\}$. Esta topología sobre $X'$ es la denominada la \textbf{topología subespacio}.
+
+Si $X$ es un conjunto, definimos $\tau = \{U\in \PP(X) : U^c \text{ es finito}\}\cup \{\emptyset\}$. Esta topología se denomina la \textbf{topología cofinita}.
+
+Si $X=\{a,b\}$ podemos considerar la topología de Sierpinski $\tau = \{\emptyset, \{a\},X\}$. Notemos que no existe ninguna métrica $d$ sobre $X$ que defina estos abiertos, pues $\{b\} = B(b, d(a,b)/2)$ que es abierto.
+\end{ex}
+
+\begin{defn}
+Un espacio topológico $(X,\tau)$ se dice \textbf{metrizable} si la topología $\tau$ coincide con la topología inducida por una métrica $d$ sobre $X$.
+\end{defn}
+
+\begin{ex}
+Si $(X,\PP(X))$ es un espacio topológico provisto de la topología discreta, entonces es metrizable con la distacia discreta $d(x,y)=\delta_{x,y}$. Por otra parte, como vimos en el ejemplo anterior, $X=\{a,b\}$ con la topología de Sierpinski no es un espacio topológico metrizable.
+\end{ex}
+
+\begin{defn}
+Si $(X,\tau)$ es un espacio topológico, un conjunto $F\subseteq X$ es \textbf{cerrado} si su complemento $F^c\in \tau$ es abierto.
+\end{defn}
+\begin{obs}
+Notemos que podemos definir a una topología tanto por sus abiertos como por sus cerrados. En efecto:
+\begin{itemize}
+\item Si $F_i$ es cerrado para todo $i\in I$, entonces $\displaystyle\bigcap_{i\in I} F_i$ es cerrado.
+\item Si $F_i$ es cerrado para todo $i\in I$, $I$ finito, entonces $\displaystyle\bigcup_{i\in I}F_i$ es cerrado.
+\item $\emptyset$ y $X$ son cerrados.
+\end{itemize}
+Si $\{F_i\}_{i\in I}\subseteq\PP(X)$ es una familia que verifica esas tres condiciones entonces $\tau = \{F_i^c\}_{i\in I}$ es una topología sobre $X$ y recíprocamente si $\tau$ es una topología $\{U^c : U\in \tau\}$ es una familia que cumple esas tres condiciones.
+\end{obs}
+
+\begin{ex}
+A veces es más conveniente definir a una topología por sus cerrados. Por ejemplo, si $k$ es un cuerpo y $A=k[x_1,\ldots , x_n]$, para cada $S\subseteq A$ definimos $F_S = \{x\in k^n : p(x)=0\;\forall p\in S\}$. Vamos a definir a los $F_S$ como los cerrados de una topología. Para eso, debemos corroborar que se cumplen las tres condiciones:
+
+Sea $\{S_i\}_{i\in I}\subseteq k[x_1,\ldots , x_n]$. Entonces $\displaystyle\bigcap_{i\in I}F_{S_i} = \{x\in k^n : p(x) = 0 \; \forall p\in S_i \;\forall i\in I\}$. Por lo tanto, la intersección de elementos de $\{F_S\}_{S\subseteq A}$ está en el conjunto.
+
+Ahora, si $I$ es un conjunto finito, para ver que la unión finita de elementos del conjunto está, bastará ver que la unión de dos elementos está (pues después sólo habría que hacer una sencilla inducción). Sean $S_1,S_2\subseteq A$. Entonces, es fácil ver que $F_{S_1}\cup F_{S_2} = F_S$ donde $S=\{pq : p\in S_1, q\in S_2\}$. En efecto, veamos la doble inclusión: Sea $x\in F_{S_1}$. Para cualesquiera $p\in S_1, q\in S_2$ tenemos que $p(x)q(x) = (pq)(x) = 0$, y así $x\in F_S$. Si $x\in F_{S_2}$ el resultado es análogo, y así $F_{S_1}\cup F_{S_2}\subseteq F_S$. Ahora, sea $x\in F_S$ tal que $x\notin F_{S_1}\cup F_{S_2}$. Entonces, existen $p\in S_1, q\in S_2$ tales que $p(x)\neq 0$ y $q(x)\neq 0$. Pero como $pq\in S$ y $x\in F_S$ debemos tener que $(pq)(x) = p(x)q(x) = 0$ y así $p(x)=0$ o $q(x)=0$. Absurdo.
+
+Finalmente, $\emptyset = F_{\{1\}}$ y $k^n = F_{\{0\}}$.
+
+Esta topología se denomina la \textbf{topología de Zariski}.
+
+\end{ex}
+
+\begin{defn}
+Sea $(X,\tau)$ un espacio topológico y $A\subseteq X$. Se define el \textbf{interior} de $A$ como $A^\circ = \displaystyle\bigcup_{U\in \tau, U\subseteq A} U$. Es decir, es el abierto más grande que está contenido en $A$. Se define la \textbf{clausura} de $A$ como $\overline{A}=\displaystyle\bigcap_{F^c\in \tau, F\supseteq A} F$. Es decir, es el cerrado más chico que contiene a $A$. Si $x\in A^\circ$ entonces se dice que es un \textbf{punto interior} y si $x\in \overline{A}$ se dice que es un \textbf{punto de adherencia}.
+\end{defn}
+
+\begin{prop}
+Valen las siguientes propiedades:
+\begin{enumerate}
+\item $A^\circ \subseteq A$.
+\item Si $B$ es abierto y $B\subseteq A$ entonces $B\subseteq A^\circ$.
+\item Si $A_1\subseteq A_2$ entonces $A_1^\circ \subseteq A_2^\circ$.
+\item $A\subseteq \overline{A}$.
+\item Si $C$ es cerrado y $A\subseteq C$ entonces $\overline{A}\subseteq C$.
+\item Si $A_1\subseteq A_2$ entonces $\overline{A_1}\subseteq \overline{A_2}$.
+\item $(\overline{A})^c = (A^c)^\circ$.
+\item $\overline{A^c} = (A^\circ)^c$.
+\item $(A\cap B)^\circ = A^\circ \cap B^\circ$.
+\item $A^\circ \cup B^\circ \subseteq (A\cup B)^\circ$. (La igualdad no necesariamente vale, por ejemplo $X=\RR$ con la topología usual, $A=\RR-\{0\}$ y $B=\{0\}$.
+\item $\overline{A\cup B} = \overline{A}\cup \overline{B}$.
+\item $\overline{A\cap B}\subseteq \overline{A}\cap\overline{B}$. (La igualdad no necesariamente vale, por ejemplo $X=\RR$ con la topología usual, $A=\RR-\{0\}$ y $B=\{0\}$.
+\item Si $A\subseteq X$, entonces $x\in \overline{A}$ si y sólo si para todo $U$ abierto con $x\in U$ tenemos $A\cap U\neq \emptyset$.
+\end{enumerate}
+\begin{proof}
+
+Las demostraciones de 1),2) y 3) son obvias, y las de 4),5),6) son similares a las primeras tres. Para probar 7) veamos que vale la doble inclusión. En efecto, sea $x\in \overline{A}^c$. Esto quiere decir que $x\notin \overline{A}$, y así existe $F$ cerrado con $A\subseteq F$ tal que $x\notin F$. Sea $U\in F^c$. Entonces $x\in U$ y $U\subseteq A^c$. Por lo tanto, $x\in (A^c)^\circ$. Para ver la otra inclusión, sea $x\in (A^c)^\circ$. Entonces, existe $U$ abierto con $x\in U\subseteq A^c$. Sea $F=U^c$. Por lo tanto, $x\notin F$, $F\supseteq A$ y así $x\notin \overline{A}$, lo que implica $x\in (\overline{A})^c$ como queríamos.
+
+La 8) sigue de 7) aplicada a $A^c$: Es decir, $\overline{A^c}^c = A^\circ$ y tomando complemento $\overline{A^c} = (A^\circ)^c$.
+
+Para la 9) también probamos la doble inclusión: Es trivial que $(A\cap B)^\circ \subseteq A^\circ \cap B^\circ$, pues $A\cap B \subseteq A,B$ y usamos 3). Para la otra inclusión, notemos que $A^\circ\cap B^\circ$ es abierto y $A^\circ \cap B^\circ \subseteq A\cap B$ y por 2) sigue lo deseado.
+
+La 10) es evidente y la 11) es similar a la 9). La 12) también es evidente.
+
+Finalmente, para probar la 13) veamos la doble implicación: $(\Longrightarrow)$ Sea $U$ abierto con $x\in U$. Si tuviéramos $A\cap U=\emptyset$ entonces $U\subseteq A^c$. Sea $F=U^c$. Entonces, $A\subseteq F$. Pero $x\notin F$. Absurdo pues $x\in \overline{F}$.
+$(\Longleftarrow)$ Sea $F$ cerrado con $F\supseteq A$ tal que $x\notin F$. Sea $U=F^c$ abierto y así $x\in U$. Por lo tanto, $A\cap U\neq \emptyset$ y así $A\not\subseteq F$. Absurdo.
+
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Un conjunto $A\subseteq X$ se dice \textbf{denso} si $\overline{A}=X$.
+\end{defn}
+
+\begin{defn}
+Si $A\subseteq X$ se define la frontera $\mathrm{Fr}(A) = \overline{A}\cap \overline{A^c}$.
+\end{defn}
+
+\begin{obs}
+Notemos que $A^\circ \cap \mathrm{Fr}(A)=\emptyset$ pues $\mathrm{Fr}(A)\subseteq \overline{A^c} = (A^\circ)^c$.
+
+Además, $A^\circ \sqcup \mathrm{Fr}(A) = \overline{A}$ pues $\overline{A} = \overline{A}\cap (A^\circ \sqcup (A^\circ)^c) = A^\circ \sqcup (\overline{A}\cap \overline{A^c})$.
+
+Finalmente, $X=A^\circ \sqcup \mathrm{Fr}(A) \sqcup (A^c)^\circ$ usando las dos afirmaciones anteriores.
+\end{obs}
+
+\begin{defn}
+Sea $(X,\tau)$ un espacio topológico. Una \textbf{base} $\mathscr{B}$ de la topología $\tau$ es un conjunto $\mathscr{B}\subseteq \tau$ tal que para todo $U\in\tau$ existen $(U_i)_{i\in I}\subseteq \mathscr{B}$ de modo que $U = \displaystyle\bigcup_{i\in I}U_i$.
+\end{defn}
+
+\begin{ex}
+En $\RR$ con la topología usual, $\mathscr{B}=\{(a,b) : a<b\}$ es una base. En $\RR^n$ con la topología usual, $\mathscr{B}=\{B(x,\varepsilon) : x\in\RR^n, \varepsilon > 0\}$ es una base. También, $\mathscr{B}' = \{B(q,\frac{1}{n}) : q\in\QQ^n , n\in\NN\}$ es una base de $\RR^n$. En efecto, si $U$ es un abierto $x\in U$ existe un $\varepsilon >0$ tal que $B(x,\varepsilon)\subseteq U$. Existe $k_x\in\NN$ tal que $\dfrac{1}{k_x}<\dfrac{\varepsilon}{2}$ y $q_x\in\QQ^n$ de modo que $d(x,q_x)<\dfrac{1}{k_x}$. Entonces por desigualdad triangular $B(q_x,\frac{1}{k_x})\subseteq U$ y así $U=\displaystyle\bigcup_{x\in U} B\left(q_x,\frac{1}{k_x}\right)$.
+\end{ex}
+
+\begin{prop}
+Si $\mathscr{B}$ es una base de $\tau$ entonces: \begin{itemize} \item Para todos $U_1,U_2\in\mathscr{B}$, $x\in U_1\cap U_2$ existe $U_3\in\mathscr{B}$ tal que $x\in U_3\subseteq U_1\cap U_2$. \item $\forall x\in X$ existe $U\in \mathscr{B}$ tal que $x\in U$.\end{itemize}
+
+Recíprocamente, si $X$ es un conjunto $\mathscr{B}\subseteq \PP(X)$ y satisface las dos condiciones, tenemos que $\mathscr{B}$ es una base de la topología $\tau = \left\{\displaystyle\bigcup_{i\in I}U_i : U_i\in \mathscr{B} \;\forall i\in I \right\}$.
+\begin{proof}
+
+La primera afirmación es obvia: para la primera condición, como $U_1\cap U_2$ es un abierto y $\mathscr{B}$ una base, existen $\{U_i\}_{i\in I}$ tales que $U_1\cap U_2 = \displaystyle\bigcup_{i\in I}U_i$, y como $x\in U_1\cap U_2$, existe $U_3 \subseteq \{U_i\}_{i\in I}$ tal que $x\in U_3\subseteq U_1\cap U_2$; mientras que para la segunda condición con tomar $X$ como el abierto ya estamos.
+
+Para ver la segunda afirmación, bastará ver que $\tau$ es de hecho una topología, pues si lo fuera, $\mathscr{B}$ sería una base por definición. Sea $U_j\in \tau$ para $j\in J$. Entonces, $U_j = \displaystyle\bigcup_{i\in I_j} U_{j_i}$ por estar $U_j\in\tau$. Entonces, $\displaystyle\bigcup_{j\in J} U_j = \displaystyle\bigcup_{j\in J}\bigcup_{i\in I_j} U_{j_i} \in \tau$ pues cada $U_{j_i}\in\mathscr{B}$. Esto prueba que la unión arbitraria de elementos de $\tau$ pertenece a $\tau$. Ahora, para ver que la intersección finita de elementos de $\tau$ permanece en $\tau$ bastará probarlo para dos: $U_1,U_2\in \tau$, $U_1 = \displaystyle\bigcup_{i\in I} U_i'$, $U_2 = \displaystyle\bigcup_{j\in J}U_j''$. Entonces, si $x\in U_1\cap U_2$ existen $U_{i_0}, U_{j_0}$ tales que $x\in U_{i_0}'\cap U_{j_0}''$. Entonces, existe $U_x\in \mathscr{B}$ con $x\in U_x\subseteq U_{i_0}'\cap U_{j_0}''$. Entonces, $U_1\cap U_2 = \displaystyle\bigcup_{x\in U_1\cap U_2} U_x$. Finalmente, $\emptyset\in \tau$ y $X\in \tau$ por la segunda condición, pues para todo $x\in X$ existe $U_x\in\mathscr{B}$ tal que $x\in U_x$ y así $X=\displaystyle\bigcup_{x\in X}U_x$. La proposición sigue.
+
+\end{proof}
+\end{prop}
+
+\begin{ex}
+Sean $(X_i,\tau_i)_{i\in I}$ espacios topológicos. Llamamos $X = \displaystyle\prod_{i\in I} X_i$ al producto cartesiano de los conjuntos. Vamos a proveer a $X$ de una topología. Consideremos la base $\mathscr{B} = \left\{\{(x_i)_{i\in I} : x_i\in U_i\} : U_i\in \tau_i \;\forall i\in I\right\}$. Notamos $\displaystyle\prod_{i\in I} U_i = \{(x_i)_{i\in I} : x_i\in U_i\}$. La \textbf{topología caja} de $X$ va a ser la topología que tiene por base a $\mathscr{B}$. Veamos que $\mathscr{B}$ cumple las dos condiciones para ser base:
+
+La primera es sencilla: simplemente es notar que $$\left(\displaystyle\prod_{i\in I} U_i^{(1)}\right) \cap \left( \displaystyle\prod_{i\in I}U_i^{(2)}\right) = \displaystyle\prod_{i\in I} U_i^{(1)}\cap U_i^{(2)} \in\mathscr{B}$$ La segunda también: notemos que para todo $x\in X$, $x\in X = \displaystyle\prod_{i\in I}X_i$.
+\end{ex}
+
+\begin{defn}
+Sea $(X,\tau)$ un espacio topológico. Una \textbf{sub-base} de $\tau$ es un conjunto $S\subseteq \tau$ tal que $\left\{U : \exists I \text{ finito}, (U_i)_{i\in I}\subseteq S \text{ con } U = \displaystyle\bigcap_{i\in I}U_i \right\}\cup\{\emptyset\}$ es una base de $\tau$. Es decir, las intersecciones finitas de elementos de la sub-base son una base de la topología.
+\end{defn}
+
+\begin{ex}
+En $\RR$, $\{(a,b) : a<b\}$ es una base. Por lo tanto, al estar contenido en $\{(a,b) : a<b\}\cup \{(-\infty,a) : a\in\RR\}\cup \{(b,+\infty):b\in\RR\}$ esta resulta una base. Notemos entonces que $\{(-\infty,a):a\in\RR\}\cup \{(b,+\infty):b\in\RR\}$ es una sub-base.
+\end{ex}
+
+\begin{prop}
+Sea $S\subseteq \PP(X)$. Entonces $S$ es una sub-base de la topología $\tau$ que tiene por base a $\mathscr{B}=\left\{U : \exists I \text{ finito}, (U_i)_{i\in I}\subseteq S \text{ con } U = \displaystyle\bigcap_{i\in I}U_i \right\}\cup\{\emptyset\}$. En ese caso, $\tau$ se llama la \textbf{topología generada} por $S$ y es la menor topología que contiene a $S$.
+\begin{proof}
+Veamos que $\mathscr{B}$ cumple las dos condiciones para ser una base. En efecto, si tenemos dos intersecciones finitas de elementos de $S$, $U_{1_1}\cap\ldots\cap U_{1_n}$ y $U_2 = U_{2_1}\cap\ldots\cap U_{2_m}$, su intersección es obviamente finita y consiste de elementos de $S$. Además, como $X\in\mathscr{B}$, todo $x\in X$ y no hay nada que ver para la segunda afirmación.
+
+Entonces, por definición tenemos que $S$ es sub-base de $\tau$ (pues $\tau$ es la topología generada por las intersecciones finitas de $S$, que resulta base). Ahora, sea $\tau'$ otra topología tal que $S\subseteq \tau'$. Si $S$ está, entonces todo elemento de $\mathscr{B}$ está en $\tau'$ pues la intersección finita de cosas de $S$ debe estar. Y como la unión de abiertos lo es, tenemos $\tau\subseteq \tau'$, y así $\tau$ es la topología más chica que contiene a $S$.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Sea $A$ un conjunto totalmente ordenado. La \textbf{topología del orden} en $A$ es la topología que tiene por sub-base a los conjuntos de la forma $$\{x\in A : \exists a\in A \text{ tal que } x< a\}\cup \{x\in A : \exists b\in A \text{ tal que } b<x\}$$
+\end{defn}
+
+\begin{ex}
+En $\ZZ$, la topología del orden es la topología discreta. En efecto, notemos que $\{a\} = \{x\in\ZZ : x < a+1\}\cap \{x\in\ZZ : x>a-1\}$, y así $\{a\}$ es abierto para cada $a\in\ZZ$. Entonces, todos los puntos de $\ZZ$ están en una base, lo que implica que la topología debe ser la discreta.
+
+En $[0,1]$ definimos $\tau_1,\tau_2$ topologías, con $\tau_1$ la topología subespacio de $\RR$ con la topología del orden y $\tau_2$ la topología del orden propia. Es fácil ver que $\tau_1$ y $\tau_2$ coinciden. Sin embargo, hay que tener cuidado, pues en $[0,1)\cup\{2\}$ podemos definir de la misma manera $\tau_1$ y $\tau_2$. En la primera, $\{2\}$ es abierto pues $\{2\} = ([0,1)\cup \{2\})\cap [\frac{3}{2},\frac{5}{2}]$ mientras que en la segunda $\{2\}$ no es abierto.
+\end{ex}
+
+\begin{defn}
+Sea $(x_n)_{n\in\NN}\subseteq X$ una sucesión. Decimos que $x_n$ tiende a $x_0$ y lo notamos $x_n\longrightarrow x_0\in X$ si para todo $U$ abierto tal que $x_0\in U$ existe un $n_0\in\NN$ tal que si $n\geq n_0$ entonces $x_n\in U$. 
+\end{defn}
+
+\begin{obs}
+Notar que el límite de una sucesión no necesita ser único. En efecto, si consideramos el espacio de Sierpinski $(\{a,b\}, \{\emptyset,\{a\},\{a,b\}\})$. Si consideramos la sucesión constante $x_n=a$ para todo $n\in\NN$ entonces $x_n$ tiende tanto a $a$ como a $b$.
+\end{obs}
+
+\begin{prop}
+Sea $(X,\tau)$ un espacio topológico y $A\subseteq X$. Si $(x_n)_{n\in\NN}\subseteq A$ es una sucesión con $x_n\longrightarrow x_0$, entonces $x_0\in\overline{A}$.
+\begin{proof}
+Sea $U$ un abierto con $x_0\in U$. Entonces, existe $n_0$ tal que si $n\geq n_0$ tenemos $x_n\in U$. Entonces $U\cap A\neq\emptyset$. Por lo tanto $x_0\in\overline{A}$.
+\end{proof}
+\end{prop}
+
+\begin{obs}
+La recíproca no es cierta. En efecto, consideremos $\displaystyle\prod_{i\in \NN}\RR$ con la topología caja y consideremos $A=\{(x_i)_{i\in\NN} : x_i>0 \;\forall i\in \NN\}$. Veamos que $(0)_{i\in\NN}\in\overline{A}$. Sea $U$ un abierto tal que $(0)_{i\in\NN}\in U$. Sea $\displaystyle\prod_{i\in\NN}U_i\subseteq U$ con $U_i$ abiertos en $\RR$ que contienen a $0$. Entonces, existe $\varepsilon_i>0$ para cada $i\in\NN$ tal que $(-\varepsilon_i,\varepsilon_i)\subseteq U$. Entonces, $(\frac{\varepsilon_i}{2})_{i\in\NN}\in A$ y está en el producto de los $U_i$. Entonces $A\cap U\neq \emptyset$ y así $(0)_{i\in\NN}\in\overline{A}$.
+
+Ahora, veamos que no existe $((x_i^{(n)})_{i\in\NN})_{n\in\NN}$ que tienda a $(0)_{i\in\NN}$. Supongamos que lo hiciera. Vamos a considerar un argumento diagonal. Sea $U=\displaystyle\prod_{n\in\NN} \left(-\dfrac{x_n^{(n)}}{2},\dfrac{x_n^{(n)}}{2}\right)\ni (0)_{i\in\NN}$. Pero la sucesión nunca se mete en $U$ pues si lo hiciera, $(x_{i}^{(n_0)})_{i\in\NN}\in U$ y mirando la coordenada $n_0$-ésima tenemos que $x_{n_0}^{(n_0)}\in \left(-\dfrac{x_{n_0}^{(n_0)}}{2},\dfrac{x_{n_0}^{(n_0)}}{2}\right)$. Absurdo.
+\end{obs}
+
+\begin{prop}
+Sea $(X,\tau)$ un espacio topológico tal que admite una base numerable $\mathscr{B} = \{U_i : i\in\NN\}$. Para todo $A\subseteq X$, $a\in X$ tenemos que $a\in\overline{A}$ si y sólo si existe $(x_n)_{n\in\NN}\subseteq A$ con $x_n\longrightarrow a$.
+\begin{proof}
+$(\Longleftarrow)$ Ya vimos que vale siempre.
+
+$(\Longrightarrow)$ Sea $I=\{i\in\NN : a\in U_i\}\neq\emptyset$. Consideremos dos casos. Si $I$ es finito, es decir $I=\{i_1,\ldots , i_n\}$. Sea $U_0 = \displaystyle\bigcap_{j=1}^k U_{i_j}$. Entonces $a\in U_0$ y $U_0$ es abierto. Como $a\in\overline{A}$, existe $x\in A\cap U_0$. Veamos que $x_n=x$ para todo $n$ cumple que $x_n\longrightarrow a$. Sea $U$ un abierto con $a\in U$. Como $U$ es unión de los de la base y $a\in U$, entonces $a\in U_{i_{j_0}}$ para algún $j_0$ y así $\displaystyle\bigcap_{j=1}^k U_{i_j}\subseteq U_{i_{j_0}}\subseteq U$. Entonces $x$ está en todo abierto $U$ que contiene a $a$ y así la sucesión converge trivialmente.
+
+Ahora, en el caso en el que $I$ es infinito, $I=\{i_1<i_2<\ldots\}$ son los índices tales que $a\in U_i$. Sea $n\in\NN$ tal que $a\in \displaystyle\bigcap_{j=1}^n U_{i_j}$, que es abierto. Como $a\in\overline{A}$, existe $x_n\in A\cap \left(\displaystyle\bigcap_{j=1}^n U_{i_j}\right)$. Sea $U$ un abierto con $a\in U$. Entonces, existe un $n_0\in\NN$ tal que $a\in U_{i_{n_0}}\subseteq U$. Si $n\geq n_0$ entonces $x_n\in\displaystyle\cap_{j=1}^n U_{i_j}\subseteq U_{i_{n_0}}$. Y estamos.
+
+\end{proof} 
+\end{prop}
+
+\begin{defn}
+Un \textbf{conjunto filtrante} (o dirigido) es un conjunto $\Gamma$ con un orden parcial $\leq$ que verifica que para todos $\alpha,\beta\in\Gamma$ existe $\gamma\in\Gamma$ con $\alpha\leq \gamma$ y $\beta\leq\gamma$.
+\end{defn}
+
+\begin{ex}
+Los naturales con el orden usual $(\NN,\leq)$ forman un conjunto dirigido y $(\NN^2 , \leq)$ con $(a,b)\leq (c,d)$ sii $a\leq c$ y $b\leq d$ también. Los naturales con el orden inducido por la divisibilidad también.
+\end{ex}
+
+\begin{defn}
+Una \textbf{red} sobre un conjunto $X$ es una función $f:\Gamma\to X$ con $\Gamma$ un conjunto filtrante. Si $f(\gamma)=x_\gamma$, entonces notamos a la red por $(x_\gamma)_{\gamma\in\Gamma}$. Si $(X,\tau)$ es un espacio topológico, decimos que una red converge a $x\in X$ si para todo $U$ abierto con $x\in U$ existe $\alpha_0\in\Gamma$ tal que $x_\alpha \in U$ para todo $\alpha\geq \alpha_0$.
+\end{defn}
+
+\begin{prop}
+Sea $(X,\tau)$ un espacio topológico y $A\subseteq X$, con $x\in X$. Entonces $x\in \overline{A}$ si y sólo si existe una red $(x_\alpha)_{\alpha\in\Gamma}\subseteq A$ que converge a $x$.
+\begin{proof}
+$(\Longleftarrow)$ Sea $U$ abierto con $x\in U$. Sea $\alpha_0\in\Gamma$ tal que si $\alpha\geq \alpha_0$ entonces $x_\alpha\in U$. Por lo tanto, $x_{\alpha_0}\in A\cap U\neq \emptyset$. Como cualquier abierto que contiene a $x$ tiene intersección no vacía con $A$, $x\in\overline{A}$ como queríamos probar.
+
+$(\Longrightarrow)$ Consideremos $\Gamma = \{U\in\tau : x\in U\}\neq \emptyset$. Para $U_1,U_2\in\Gamma$ decimos que $U_1\leq U_2$ si $U_2\subseteq U_1$. Dados $U_1,U_2\in\Gamma$, tomo $U_1\cap U_2\in\Gamma$ y $U_1\cap U_2 \geq U_1,U_2$. Para cada $U\in\Gamma$, sea $x_u\in U\cap A$ algún elemento de la intersección. Veamos que esta red converge a $x$. En efecto, sea $U$ abierto con contiene a $x$. Para todo $V\in\Gamma$, $V\geq U$ tenemos que $x_V \in V\subseteq U$. Y estamos.
+\end{proof} 
+\end{prop}
+
+\begin{defn}
+Sea $\Gamma$ un conjunto dirigido. Un subconjunto $\Gamma'\subseteq \Gamma$ se dice \textbf{cofinal} si $\forall \alpha\in\Gamma$ existe $\beta\in\Gamma'$ tal que $\beta\geq\alpha$.
+\end{defn}
+
+\begin{obs}
+Si $\Gamma$ es un conjunto dirigido y $\Gamma'$ es cofinal, entonces $\Gamma'$ es dirigido vía la restricción del orden de $\Gamma$ a $\Gamma'$. En efecto, si $\alpha,\beta\in \Gamma'$, existe $\gamma\in\Gamma$ tal que $\alpha,\beta\leq \gamma$. Pero como $\Gamma'$ es cofinal, existe $\gamma'\in\Gamma'$ tal que $\gamma \leq \gamma'$. Entonces, $\alpha,\beta \leq \gamma'$.
+\end{obs}
+
+\begin{defn}
+Una \textbf{sub-red} de una red $f:\Gamma\to X$ es una función de la forma $\Lambda\stackrel{g}{\longrightarrow} \Gamma\stackrel{f}{\longrightarrow} X$ donde $\Lambda$ es un conjunto dirigido, $g$ una función que respeta el orden (ie. si $\alpha\leq\beta$ entonces $g(\alpha)\leq g(\beta)$) y tal que $g(\Lambda)$ es cofinal en $\Gamma$.
+\end{defn}
+
+\begin{prop}
+Una red $f:\Gamma\to X$ es convergente a $x\in X$ si y sólo si toda subred de $f:\Gamma\to X$ converge a $x\in X$.
+\begin{proof}
+$(\Longleftarrow)$ Notemos que $\Gamma\stackrel{\id}{\longrightarrow}\Gamma\stackrel{f}{\longrightarrow}X$ es una subred y listo.
+
+$(\Longrightarrow)$ Sea $\Lambda\stackrel{g}{\longrightarrow} \Gamma\stackrel{f}{\longrightarrow} X$ una subred. Sea $U$ un abierto con $x\in U$. Sabemos que existe un $\alpha_0\in\Gamma$ tal que si $\alpha\geq \alpha_0$ entonces $f(\alpha)\in U$. Como $g(\Lambda)$ es cofinal en $\Gamma$, existe $\lambda_0\in \Lambda$ tal que $g(\lambda_0)\geq \alpha_0$. Si $\lambda\geq \lambda_0$ entonces $g(\lambda)\geq g(\lambda_0)\geq \alpha_0$. Entonces, si $\lambda\geq \lambda_0$ tenemos que $f\circ g (\lambda)\in U$, y así la sub-red converge a $x$.
+\end{proof}
+\end{prop}
+
+\section{Funciones Continuas}
+
+\begin{defn}
+Sean $(X_1,\tau_1)$ y $(X_2,\tau_2)$ dos espacios topológicos. Decimos que una función $f:X_1\to X_2$ es \textbf{continua} si para todo $U\in\tau_2$ se tiene que $f^{-1}(U)\in \tau_1$. Es decir, la preimagen de un abierto es abierto. (Equivalentemente, la preimagen de un cerrado es cerrado, pues $f^{-1}(X-A) = X - f^{-1}(A)$).
+\end{defn}
+
+\begin{ex}
+La función identidad $(X,\tau_1)\stackrel{\id}{\longrightarrow} (X,\tau_2)$ es continua si y sólo si $\tau_2\subseteq \tau_1$. Es decir, si $\tau_1$ es más \textit{fina} que $\tau_2$.
+
+Notemos que $(X_1,\mathrm{disc.})\stackrel{f}{\longrightarrow} (X_2,\tau)$ siempre es continua pues cualquier subconjunto de $X_1$ es abierto. Además, de forma similar, $(X_1,\tau)\stackrel{f}{\longrightarrow} (X_2,\mathrm{indisc.})$ también siempre es continua.
+
+Sea $X_1 = \NN\cup\{+\infty\}$ y $\tau$ la topología de base $$\{\{m\}: m\in\NN\} \cup \{\{+\infty\}\cup \{n\in\NN : n\geq m\} : m\in\NN\}$$ Entonces $f:X_1\to X_2$ es continua si y sólo si $f(n)\stackrel{\longrightarrow}{n\to +\infty} f(+\infty)$.
+
+En efecto, si $f$ es continua, sea $U$ un abierto de $X_2$ que contiene a $f(+\infty)$. Como $f$ es continua, $+\infty\in f^{-1}(U)$, que es abierto. Entonces, existe $m\in\NN$ tal que $+\infty \in \{n\geq m\}\cup \{+\infty\}\subseteq U$. Por lo tanto, si $n\geq m$, $f(n)\in U$ y así converge a $f(+\infty)$.
+
+Ahora, sea $U$ un abierto de $X_2$. Si $f(+\infty)\notin U$, entonces $+\infty\notin f^{-1}(U)$ implica que $f^{-1}(U)\subseteq \NN$. Entonces, $f^{-1}(U) = \displaystyle\bigcup_{m\in f^{-1}(U)}\{m\}$, que es abierto por ser unión de abiertos. Si $f(+\infty)\in U$ entonces existe $n_0$ tal que si $n\geq n_0$ tenemos que $f(n)\in U$. Entonces $\{n\in\NN : n\geq n_0\}\cup \{+\infty\}\subseteq f^{-1}(U)$. Esto implica que $$f^{-1}(U) = (\{n\in\NN : n> n_0\}\cup\{+\infty\}) \cup \left(\displaystyle\bigcup_{m\in\NN, m<n_0, m\in f^{-1}(U)}\{m\}\right)$$ que es unión de elementos de la base y así abierto.
+
+Se puede ver fácilmente adaptando la demostración anterior que si $X_1 = \Gamma \sqcup \{+\infty\}$ con $\Gamma$ un conjunto filtrante y $\tau$ la topología de base $$\{\{\alpha\} : \alpha\in \Gamma\} \cup \{\{\beta\in\Gamma : \beta\geq \alpha\}\cup\{+\infty\} : \alpha\in\Gamma\}$$ entonces $f:X_1\to X_2$ es continua si y sólo si la red $f(\alpha)$ converge a $f(+\infty)$.
+\end{ex}
+
+\begin{prop}
+Sean $f:X\to Y$, $g:Y\to Z$ funciones continuas. Entonces la composición $g\circ f:X\to Z$ es una función continua.
+\begin{proof}
+Es evidente pues si $U$ es un abierto de $Z$, $(g\circ f)^{-1}(U) = f^{-1}(g^{-1}(U))$. Como $g$ es continua, $g^{-1}(U)$ es abierto y como $f$ es continua, $f^{-1}(g^{-1}(U))$ es abierto. Y listo.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Sea $f:X\to Y$ y $x\in X$. Decimos que $f$ es continua en $x$ si para todo $U\subseteq Y$ abierto con $f(x)\in U$, existe un abierto $V\subseteq X$ tal que $x\in V\subseteq f^{-1}(U)$.
+\end{defn}
+
+\begin{prop}
+Sea $f:X\to Y$. $f$ es continua si y sólo si $f$ es continua en $x$ para todo $x\in X$.
+\begin{proof}
+$(\Longrightarrow)$ Simplemente tomo $V = f^{-1}(U)$.
+
+$(\Longleftarrow)$ Sea $U\subseteq Y$ abierto. Si $U=\emptyset$ entonces $f^{-1}(\emptyset)=\emptyset$ que es abierto trivialmente. Si $U\neq\emptyset$, sea $x\in f^{-1}(U)$. Como $f$ es continua en $x$ y $f(x)\in U$, entonces existe $V_x\subseteq X$ abierto tal que $x\in V_x\subseteq f^{-1}(U)$. Entonces, $f^{-1}(U) = \displaystyle\bigcup_{x\in f^{-1}(U)} V_x$, que es abierto por ser unión de abiertos.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $f:X\to Y$ y $x\in X$. Entonces $f$ es continua en $x$ si y sólo si para toda red $(x_\alpha)_{\alpha\in\Gamma}$ convergente a $x$ tenemos que la red $(f(x_\alpha))_{\alpha\in\Gamma}$ es convergente a $f(x)$.
+\begin{proof}
+$(\Longrightarrow)$ Sea $(x_\alpha)_{\alpha\in\Gamma}$ una red convergente a $x$. Sea $U$ abierto tal que $f(x)\in U$. Como $f$ es continua en $x$, existe $V$ abierto tal que $x\in V\subseteq f^{-1}(U)$. Como la red $(x_\alpha)_{\alpha\in\Gamma}$ converge a $x$, existe un $\alpha_0\in\Gamma$ tal que si $\alpha\geq\alpha_0$ entonces $x_\alpha\in V\subseteq f^{-1}(U)$. Luego, si $\alpha\geq\alpha_0$ tenemos que $f(x_\alpha)\in U$ y así la red $(f(x_\alpha))_{\alpha\in\Gamma}$ es convergente a $f(x)$.
+
+$(\Longleftarrow)$ Sea $U$ abierto tal que $f(x)\in U$. Supongamos que no existe $V\subseteq X$ abierto con $x\in V\subseteq f^{-1}(U)$. Sea $\Gamma = \{W \text{ abierto} : x\in W\}$ ordenado por $W_1\leq W_2$ sii $W_2\subseteq W_1$. Esto resulta un conjunto dirigido. Notemos que para todo $W\in\Gamma$ tenemos que $W\not\subseteq f^{-1}(U)$ y así existe $x_W\in W$ tal que $f(x_W)\notin U$ y así la red $(f(x_W))_{W\in\Gamma}$ no puede converger a $f(x)$. Entonces, mi red $(x_W)_{W\in\Gamma}$ converge a $x\in X$ de manera obvia, pero $(f(x_W))_{W\in\Gamma}$ debe converger a $f(x)$ por hipótesis. Absurdo.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Supongamos que $A\subseteq X$ y $f:X\to Y$. Entonces $\left. f\right|_{A}:A\to Y$ es la restricción de $f$ a $A$.
+\end{defn}
+
+\begin{prop}
+Si $f:X\to Y$ es continua entonces $\left. f\right|_{A}$ es continua.
+\begin{proof}
+Sea $U\subseteq Y$ abierto. Entonces $\left. f\right|_{A}^{-1}(U) = f^{-1}(U)\cap A$. Pero como $f^{-1}(U)$ es abierto en $X$ por ser $f$ continua, resulta que $\left. f\right|_{A}^{-1}(U)$ es un abierto de $A$ en la topología subespacio.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X$ una unión de abiertos. Es decir, $X=\displaystyle\bigcup_{i\in I} U_i$ con $U_i$ abierto para todo $i\in I$. Sea $f:X\to Y$ una función tal que $\left. f\right|_{U_i}:U_i\to Y$ resulta continua para todo $i\in I$. Entonces, $f$ es continua.
+\begin{proof}
+Sea $V\subseteq Y$ abierto. Entonces, es fácil ver que $$f^{-1}(V) = f^{-1}(V)\cap X = f^{-1}(V)\cap \left(\displaystyle\bigcup_{i\in I}U_i\right) = \displaystyle\bigcup_{i\in I} f^{-1}(V)\cap U_i = \displaystyle\bigcup_{i\in I} \left. f\right|_{U_i}^{-1}(V)$$ Como cada $\left. f\right|_{U_i}$ es continua, resulta que $\left. f\right|_{U_i}^{-1}(V)$ es abierto en la topología subespacio de $U_i$. Es decir, $\left.f\right|_{U_i}^{-1}(V) = V_i \cap U_i$ con $V_i$ abierto de $X$. Entonces, al ser $U_i$ abierto, tenemos que eso es una intersección de abiertos y así abierto en $X$. Y listo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X=\displaystyle\bigcup_{i=1}^n F_i$ con $F_i$ cerrados para todo $i\in 1,\ldots , n$. Sea $f:X\to Y$ tal que $\left. f\right|_{F_i}:F_i\to Y$ es continua para todo $i=1,\ldots ,n$. Entonces $f$ es continua.
+\begin{proof}
+
+Sea $H\subseteq Y$ cerrado. Entonces haciendo el mismo truco que la demostración anterior, $$f^{-1}(H) = f^{-1}(H)\cap X = f^{-1}(H)\cap\left(\displaystyle\bigcup_{i=1}^n F_i\right) = \displaystyle\bigcup_{i=1}^n f^{-1}(H)\cap F_i = \displaystyle\bigcup_{i=1}^n \left. f\right|_{F_i}^{-1}(H)$$ Como cada $\left. f\right|_{F_i}^{-1}(H)$ es carrado en $F_i$ por continuidad, tenemos que $\left.f\right|_{F_i}^{-1}(H)$ es cerrado en $X$ por ser intersección de cerrados de $X$. Entonces, $X$ es unión finita de cerrados y así cerrado.
+
+\end{proof}
+\end{prop}
+
+\begin{obs}
+Sea $X=\displaystyle\bigcup_{i\in I}U_i$ un $U_i$ abiertos de $X$ arbitrarios. Tengo $f_i:U_i\to Y$ una familia de funciones continuas tales que para todo $x\in U_i\cap U_j$, $f_i(x)=f_j(x)$. Sea $f:X\to Y$ tal que si $x\in U_i$ entonces $f(x) = f_i(x)$ (está bien definido por cómo interactuan las $f_i$ con las intersecciones). Entonces esta $f$ es continua (pues simplemente aplicamos la proposición anterior a $f$ que restringida a los $U_i$ queda continua).
+
+Vale lo mismo para finitos cerrados: si $X=\displaystyle\bigcup_{i=1}^n$ y tengo $f_i:F_i\to Y$ continuas tales que se pegan bien (es decir, $x\in F_i\cap F_j \Longrightarrow f_i(x)=f_j(x)$), entonces puedo definir $f:X\to Y$ dada por $f(x) = f_i(x)$. Esta $f$ resulta continua nuevamente en virtud de la proposición anterior.
+\end{obs}
+
+\begin{defn}
+Sea $f:X\to Y$ una función. Decimos que es \textbf{abierta} si para todo $U\subseteq X$ abierto tenemos que $f(U)$ es abierto. De manera análoga, decimos que $f$ es \textbf{cerrada} si para todo $F\subseteq X$ cerrado tenemos que $f(F)$ es cerrado.
+\end{defn}
+
+\begin{obs}
+Notemos que abierta, cerrada y continua son conceptos que ninguno implica a otro.
+
+Para ver que continua no implica ni abierta ni cerrada miremos $\id:(X,\mathrm{disc})\to (X,\mathrm{indisc})$.
+
+Para ver que ni abierta ni cerrada implican continua miremos $\id:(X,\mathrm{indisc})\to (X,\mathrm{disc})$.
+
+Para ver que abierta no implica cerrada miremos $\pi_1:\RR^2\to \RR$ la proyección al eje $x$, $(x,y)\mapsto x$. Esta función es abierta, pero no es cerraca, pues $S=\{(x,y)\in\RR^2 : xy-1 = 0\}$ es cerrado y $\pi_1(S)=\RR-\{0\}$ no lo es.
+
+Para ver que cerrada no implica abierta miremos $f:\RR\to\RR$, $f(x)=0$.
+\end{obs}
+
+\begin{defn}
+Decimos que $f:(X,\tau_1)\to (Y,\tau_2)$ es un \textbf{homeomorfismo} si es biyectiva, continua y con inversa continua. Si existe un homeomorfismo entre dos espacios $(X,\tau_1)$ y $(Y,\tau_2)$ decimos que los espacios son homeomorfos y lo notamos $(X,\tau_1)\sim (Y,\tau_2)$. Es fácil verificar que $\sim$ es una relación de equivalencia.
+\end{defn}
+
+\begin{obs}
+Supongamos que $f:X\to Y$ es biyectiva. Entonces, para todo $A\subseteq X$ vale que: \begin{itemize}\item $f(A^c) = f(A)^c$. \item $f(A) = (f^{-1})^{-1}(A)$. \end{itemize} Queda como ejercicio probarlas (es simplemente ver la doble inclusión). En virtud de estas propiedades, es fácil ver que $f:X\to Y$ es homeomorfismo si y sólo si $f$ es biyectiva, continua y abierta (y equivalentemente, $f$ biyectiva, continua y cerrada ya que $f$ es abierta si y sólo si es cerrada cuando $f$ es biyectiva usando las dos propiedades anteriores). 
+\end{obs}
+
+\section{Topologías Iniciales y Finales}
+
+\begin{defn}
+Sea $X$ un conjunto y $(Y_i,\tau_i)_{i\in I}$ una familia de espacios topológicos. Sean $f_i:X\to (Y_i,\tau_i)$ funciones. Definimos la \textbf{topología inicial} en $X$ respecto de la familia $(f_i)_{i\in I}$ de funciones como la topología que tiene por sub-base a $\{f_i^{-1}(U) : U\subseteq Y_i, U\in\tau_i, i\in I\}$.
+\end{defn}
+
+\begin{prop}
+La topología inicial es la menor topología en $X$ tal que $f:X\to Y_i$ es continua para todo $i\in I$. Es decir, si $\tau$ es una topología sobre $X$ tal que $f_i:(X,\tau)\to (Y_i,\tau_i)$ resulta continua para todo $i$ entonces, $\mathrm{top. inicial}\subseteq\tau$.
+
+En el caso en que tenemos una única función, $f:X\to Y$, el conjunto $\{f^{-1}(U) : U\subseteq Y, U\text{ abierto}\}$ ya nos da una topología en $X$.
+
+Si $(Z,\overline{\tau})$ es otro espacio topológico y sea $g:Z\to X$ (con $X$ provisto de la topología inicial). Entonces, $g$ es continua si y sólo si $f_i\circ g$ es continua para todo $i\in I$.
+\begin{proof}
+
+Notemos que la primera afirmación es obvia pues si $f_i:(X,\tau)\to (Y_i,\tau_i)$ es continua, para cualquier abierto $U\subseteq Y_i$ debemos tener $f^{-1}(U)\in \tau$. Pero entonces tengo a toda la sub-base de la topología inicial en $\tau$, y así a toda la topología inicial. La segunda afirmación también es obvia pues la intersección de preimagenes es la preimagen de la intersección y lo mismo para uniones.
+
+Para probar la tercera afirmación, si $g$ es continua entonces la afirmación es obvia por composición de continuas. Ahora, para la vuelta, sea $U\subseteq X$ un abierto. Entonces, podemos escribir a $U$ como unión de intersecciones finitas de elementos de la sub-base. Es decir, tenemos  $U=\displaystyle\bigcup_{j\in J}\left(\bigcap_{h=1}^{k_j} f_{i_{h,j}}^{-1}(U_{i_{h,j}})\right)$ con $U_{i_{h,j}}$ abierto en $Y_{i_{h,j}}$. Por lo tanto, tenemos que $g^{-1}(U) = \displaystyle\bigcup_{j\in J} \left( \bigcap_{h=1}^{k_j} g^{-1}((f^{-1}_{i_{h,j}}(U_{i_{h,j}})))\right) = \displaystyle\bigcup_{j\in J} \left( \bigcap_{h=1}^{k_j} (f_{i_{h,j}}\circ g)^{-1}(U_{i_{h,j}})\right)$. Pero ahora bien, como las $f_{i_{h,j}}\circ g$ son continuas, tenemos que $g^{-1}(U)$ es una unión arbitraria de intersecciones finitas de abiertos de $Z$ y así abierto. Como queríamos probar.
+
+\end{proof}
+\end{prop}
+
+Podemos juntar la afirmación 1 y 3 para ver que la construcción de la topología inicial es universal en el siguiente sentido:
+
+\begin{prop}[Propiedad Universal de la Topología Inicial]
+Sea $X$ un conjunto y $f_i:X\to (Y_i,\tau_i)$ una familia de funciones de $X$ a espacios topológicos. Sea $\tau$ una topología sobre $X$. Entonces, $\tau$ es la topología inicial sobre $X$ respecto de $(f_i)_{i\in I}$ si y sólo si $(X,\tau)$ cumple la siguiente propiedad universal:
+
+\center{"`Para todo espacio topológico $Z$, una función $g:Z\to X$ es continua si y sólo si $f_i\circ g:Z\to Y_i$ es continua. Es decir, el siguiente diagrama conmuta:"'}\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ Z\arrow[]{r}[above, font=\normalsize]{g}\arrow[]{dr}[left,font=\normalsize]{f_i\circ g}& X\arrow[]{d}[right ,font=\normalsize]{f_i} \\
+& Y_i
+\end{tikzcd}
+\end{center}
+\begin{proof}
+Si $\tau_I$ es la topología inicial entonces $(X,\tau_{I})$ cumple la propiedad universal en virtud de la tercera afirmación de la proposición anterior. Ahora, si $(X,\tau)$ también cumple la propiedad universal, consideremos $\id: (X,\tau_I)\to (X,\tau)$. Como $(X,\tau)$ cumple la propiedad universal y tenemos que $f_i\circ \id:(X,\tau_I)\to Y_i$ son continuas por definición de topología inicial, entonces debemos tener que $\id$ es continua. Esto implica que $\tau\subseteq \tau_I$. Pero cambiando los roles de $(X,\tau)$ y $(X,\tau_I)$, como ambos cumplen la propiedad universal, debemos tener que $\id: (X,\tau)\to (X,\tau_I)$ es continua y así $\tau_I\subseteq \tau$. Entonces $\tau = \tau_I$ y listo.
+\end{proof}
+\end{prop}
+
+\begin{ex}
+Sea $(X,\tau)$ un espacio topológico, $A\subseteq X$ y $\iota :A\hookrightarrow X$. La topología inicial en $A$ respecto de $\iota$ es $\{\iota^{-1}(U) : U\subseteq X \text{ abierto}\} = \{U\cap A : U\subseteq X \text{ abierto}\}$. Es decir, la topología inicial en un subconjunto respecto de la inclusión es la topología subespacio.
+
+Ahora sea $(\tau_i)_{i\in I}$ una familia de topologías sobre un conjunto $X$. Miro para cada $i\in I$, $\id:X\to (X,\tau_i)$ y le doy la topología inicial a $X$ respecto de estas funciones. Esta topología es la más chica que es más grande que todos los $\tau_i$ y por eso la llamaremos la \textbf{topología supremo}.
+
+Otro ejemplo (y emblemático) es el siguiente. Sean $(X_i,\tau_i)$ espacios topológicos y consideremos $X=\displaystyle\prod_{i\in I}X_i$. La \textbf{topología producto} en $X$ es la topología inicial en $X$ respecto de las proyecciones $\pi_i: X\to (X_i,\tau_i)$. Es decir, $\{\pi_i^{-1}(U_i) : U_i\subseteq X_i \text{ abierto } \forall i\in I\}$ es una sub-base de la topología producto. Una base entonces de la topología producto es $\left\{ \displaystyle\bigcap_{h=1}^k \pi_{i_h}^{-1}(U_{i_h}) : U_{i_h}\subseteq X_{i_h} \text{ abierto} \right\}$.
+\end{ex}
+
+\begin{obs}
+Si $I$ es finito, la topología producto coincide con la topología caja. En general, si $I$ es infinito, la topología producto está incluída en la topología caja (pero puede ser distinta). Un ejemplo para esto es $X_i= \RR$, $I=\NN$ y $U=(-1,1)^\NN$. $U$ es abierto en la topología caja pero $U$ no es abierto en la topología producto (pues hay alguna coordenada donde tengo todo $\RR$ y así no queda en $(-1,1)$).
+
+Por la propiedad universal, sabemos que $g:\RR\to\displaystyle\prod_{i\in \NN}\RR$, dada por $g(x)=(x)_{i\in\NN}$ es continua en la topología producto pues componer con las proyecciones simplemente nos da la identidad. Ahora bien, esta función $g$ no es continua en la topología caja. En efecto, considero $U = (-1,1)\times (-\frac{1}{2},\frac{1}{2})\times (-\frac{1}{3},\frac{1}{3})\times \ldots$. Entonces, $g^{-1}(U)=\{0\}$, que no es abierto en $\RR$.
+
+La topología producto $\displaystyle\prod_{i\in\NN}\RR$ admite una base numerable: $$\left\{\displaystyle\bigcap_{h=1}^k \pi_{i_h}^{-1}((a_{i_h},b_{i_h})) : a_{i_h},b_{i_h}\in\QQ , a<b , k\in \NN\right\}$$ Entonces, ya vimos que si miro $A=\{x\in X : x_i > 0 \;\forall i\in\NN\}$ tenemos que $(0)_{i\in\NN}\in\overline{A}$ para la topología caja pero no existe ninguna sucesión en $A$ que tienda a $(0)_{i\in\NN}$. Sin embargo, $(0)_{i\in\NN}\in \overline{A}$ para la topología producto y como el espacio admite una base numerable entonces existe una sucesión en $A$ que tienda a $(0)_{i\in\NN}$.
+
+Estas observaciones en algún sentido nos dice que entre la topología caja y la producto, la producto es la "`correcta"'.
+\end{obs}
+
+Ahora, vamos a definir la noción dual a una topología inicial. Una topología final:
+\begin{defn}
+Sea $X$ un conjunto, $(Y_i,\tau_i)_{i\in I}$ una familia de espacios topológicos y $(f_i)_{i\in I}$, $f_i:Y_i\to X$ una familia de funciones para $i\in I$. Se define la \textbf{topología final} de $X$ respecto a $(f_i)_{i\in I}$ como $\tau_F = \{U\subseteq X : f_i^{-1}(U)\in \tau_i\;\forall i\in I\}$.
+\end{defn}
+
+\begin{obs}
+Hay que chequear de hecho $\tau_F$ es una topología, que es sencillo usando que la intersección de las preimagenes es la preimagen de la intersección y que la unión de las preimagenes es la preimagen de la unión.
+
+Podemos imitar los resultados que conocíamos para la topología inicial ahora en la topología final.
+
+La topología final es la mayor topología en $X$ tal que $f_i:Y_i\to X$ son todas continuas. Es decir, si $\tau$ es una topología en $X$ tal que $f_i:Y_i\to (X,\tau)$ resultan continaus entonces $\tau\subseteq\tau_F$. Esto es claro pues si $f_i:Y_i\to (X,\tau)$ es continua para todo $i\in I$ tenemos que para cualquier $U\in\tau$, $f_i^{-1}(U) \in\tau_i$ para todo $i\in I$ y así $U\in \tau_F$ por definición.
+
+Sea $(Z,\overline{\tau})$ un espacio topológico y $g:X\to Z$ con $X$ provisto de la topología final. Entonces $g$ es continua si y sólo si $g\circ f_i$ es continua para todo $i\in I$. En efecto, si $g$ es continua, $g\circ f_i$ es continua para todo $i\in I$ por ser composición de continuas. Para la vuelta, sea $U\subseteq Z$ un abierto. Entonces $g^{-1}(U)$ es abierto si y sólo si $f_i^{-1}(g^{-1}(U))$ es abierto para todo $i\in I$, por la definición de topología final. Pero esto último es $(g\circ f_i)^{-1}(U)$, que es abierto para todo $i\in I$ por ser $g\circ f_i$ continua.
+\end{obs}
+
+\begin{prop}[Propiedad Universal de la Topología Final]
+Sea $X$ un conjunto y $f_i:(Y_i,\tau_i)\to X$ una familia de funciones de espacios topológicos a $X$. Sea $\tau$ una topología sobre $X$. Entonces, $\tau$ es la topología final sobre $X$ respecto de $(f_i)_{i\in I}$ si y sólo si $(X,\tau)$ cumple la siguiente propiedad universal:
+
+\center{"`Para todo espacio topológico $Z$, una función $g:X\to Z$ es continua si y sólo si $g\circ f_i:Y_i\to Z$ es continua. Es decir, el siguiente diagrama conmuta:"'}\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ Y_i\arrow[]{rd}[right, font=\normalsize]{g\circ f_i}\arrow[]{d}[left,font=\normalsize]{f_i}& \\
+X \arrow[]{r}[font=\normalsize]{g}& Z
+\end{tikzcd}
+\end{center}
+\begin{proof}
+Sabemos que si $\tau_F$ es la topología final, entonces $(X,\tau_F)$ cumple la propiedad universal en virtud de la observación anterior. Sea $\tau$ otra topología sobre $X$ tal que $(X,\tau)$ también la cumple y consideremos las funciones $\id: (X,\tau_F)\to (X,\tau)$, $\id:(X,\tau)\to (X,\tau_F)$. En virtud de la propiedad universal (aplicada para $(X,\tau_F)$ en el primer caso y para $(X,\tau)$ en el segundo) es obvio que las composiciones son continuas y así las dos funciones identidad son continuas. Esto implica que $\tau =\tau_F$ como queríamos.
+\end{proof}
+\end{prop}
+
+\begin{ex}
+Sean $(Y_i,\tau_i)$ espacios topológicos. $X=\displaystyle\bigsqcup_{i\in I} Y_i = \{(y,i):y\in Y_i, i\in I\}$. Consideremos las inclusiones $Y_i\stackrel{\mathrm{inc}_i}{\hookrightarrow} X$ dadas por $\mathrm{inc}_i(y) = (y,i)$. Le damos la topología final a $X$ respecto de esas inclusiones y al espacio que resulta lo llamamos la \textbf{unión disjunta}. Entonces, $U\subseteq X$ es un abierto si y sólo si $\mathrm{inc}_i^{-1}(U)$ es abierto para todo $i\in I$.
+
+Sean $(X,\tau_i)_{i\in I}\stackrel{\id}{\longrightarrow} X$. La topología final en $X$ se llama la \textbf{topología ínfimo}. En efecto, es la topología más grande que está contenida en todas las otras.
+
+Sea $(Y,\tau)$ un espacio topológico y sea $\Rel$ una relación de equivalencia en $Y$. Sea $X = Y/\Rel$ el conjunto de clases de equivalencia de esta relación. Consideremos la proyección canónica $Y\stackrel{\pi}{\longrightarrow} X$, $y\mapsto [y]$ (donde $[y]$ es la clase de $y$). La topología final de $X$ respecto a $\pi$ se denomina la \textbf{topología cociente} en $X$.
+\end{ex}
+
+\begin{defn}
+Sea $f:Y\to Z$ una función. $f$ se dice $\Rel$-compatible si $y_1\Rel y_2$ implica que $f(y_1)=f(y_2)$.
+\end{defn}
+
+\begin{prop}
+Supongamos que $f:Y\to Z$ es continua y $\Rel$-compatible. Entonces, existe una única $\overline{f}:Y/\Rel\to Z$ tal que el siguiente diagrama conmuta:
+\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ Y\arrow[]{d}[left, font=\normalsize]{\pi}\arrow[]{r}[font=\normalsize]{f}& Z \\
+Y/\Rel \arrow[dashed]{ru}[right, font=\normalsize]{\exists!\overline{f}}& 
+\end{tikzcd}
+\end{center}
+\begin{proof}
+La existencia es clara: definimos $\overline{f}([x]) = f(y)$ para algún $y\in [x]$. Está bien definido por la $\Rel$-compatibilidad. Pero a su vez, esto nos da la unicidad, pues para que el diagrama conmute no podemos hacer nada más que eso. La continuidad es obvia por la propiedad universal de la topología final: en efecto, como $Y/\Rel$ tiene la topología final dada por $\pi$, sabemos que $\overline{f}$ es continua si y sólo si $\overline{f}\circ\pi = f$ es continua. Y estamos.
+\end{proof}
+\end{prop}
+
+\begin{ex}
+Consideremos el segmento $Y=[0,1]$ y la relación de equivalencia que es "`pegar"' los dos extremos. Es decir, $\Rel = \{(0,0),(0,1),(1,0),(1,1)\}\cup \{(x,x):x\in (0,1)\}$. Veamos que $Y/\Rel\simeq S^1$ donde $S^1 = \{(x,y)\in\RR^2 : \sqrt{x^2 +y^2}=1\}$. En efecto, consideremos la función $f:[0,1]\to S^1$ dada por $f(t) = (\cos(2\pi t),\sin(2\pi t))$. Esta función es $\Rel$-compatible. Como $f$ es continua, por la proposición anterior, sabemos que $\overline{f}:Y/\Rel\to S^1$ es continua. Es obvio que $\overline{f}$ es inyectiva por la $\Rel$-compatibilidad de $f$. Además, es claro que por la conmutatividad del diagrama, al ser $f$ sobreyectiva, tenemos que $\overline{f}$ es sobreyectiva. Para ver que $\overline{f}$ es un homeomorfismo, vamos a probar que es abierta. Sea $U\subseteq Y/\Rel$ un abierto y $p\in \overline{f}(U)$. Veamos que existe $U_p$ abierto en $S^1$ tal que $p\in U_p\subseteq \overline{f}(U)$. En ese caso ya estaremos pues $\overline{f}(U)=\displaystyle\bigcup_{p\in\overline{f}(U)} U_p$, que es abierto por ser unión de abiertos. Pero para ver esto, simplemente partimos en dos casos. Si $p=(1,0)\in\overline{f}(U)$, entonces $[0]\in U$, y así $\{0,1\}\in\pi^{-1}(U)$, que es abierto por ser $\pi$ continua. Por lo tanto, existen $a,b\in [0,1]$ tales que $[0,a)\cup (b,1]\subseteq \pi^{-1}(U)$. Entonces $f([0,a)\cup (b,1])\subseteq f(\pi^{-1}(U)) =\overline{f}(U)$. Por lo tanto, es fácil chequear que $U_p = f([0,a)\cup(b,1])$ es el abierto de $S^1$ que buscamos. Si $p\neq (1,0)\in \overline{f}(U)$ hago una cuenta similar y también sale.
+\end{ex}
+
+\begin{obs}
+Sea $Y$ un espacio topológico, $\Rel$ una relación de equivalencia en $Y$ y $X=Y/\Rel$ el espacio cociente (provisto de la topología cociente). Sea $X'\subseteq X$ y $Y'=\pi^{-1}(X')$. En $X'$ tenemos la topología subespacio de $X$, que llamamos $\tau_S$ pero también tenemos la topología cociente inducida por $Y'\stackrel{\left.\pi\right|_{Y'}}{\longrightarrow} X'$, que llamamos $\tau_C$. Es decir, tenemos la situación del siguiente diagrama: \begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ Y'\arrow[hookrightarrow]{d}[left, font=\normalsize]{\iota}\arrow[]{r}[font=\normalsize]{\left.\pi\right|_{Y'}}& X' \arrow[hookrightarrow]{d}[right,font=\normalsize]{\iota} \\
+Y\arrow[]{r}[font=\normalsize]{\pi}& X 
+\end{tikzcd}
+\end{center}
+
+Notemos que $\tau_S\subseteq \tau_C$. En efecto, $\pi\circ \iota : Y'\to X$ es continua y como $\tau_S$ es la topología inicial para la inclusión $\iota:X'\hookrightarrow X$, tenemos que $\left.\pi\right|_{Y'}:Y'\to X'$ debe ser continua. Esto implica que $\tau_S\subseteq \tau_C$, pues para cada abierto de $(X',\tau_S)$, su preimagen por $\left.\pi\right|_{Y'}$ queda abierto (por ser continua) y por la definición de topología inicial, es abierto de $(X',\tau_C)$.
+
+Por lo general \textbf{no} es cierto que $\tau_C\subseteq \tau_S$. Consideremos $Y=[0,2]$ con la topología inducida de $\RR$ y sea $A=\{0\} \cup (1,2]$. Consideremos la relación $\Rel$ dada por $x\Rel y$ si y sólo si $x=y$ o $x,y\in A$ y sea $X=Y/\Rel$. Sea $X' =\{[a] : a\in (0,1]\}$ y así $Y' = (0,1]$. Consideremos entonces el conjunto $U=\{[a]:a\in (\frac{1}{2},1]\}$. Es claro que $U\in \tau_C$. En efecto, $\left.\pi\right|_{Y'}^{-1}(U)=\pi^{-1}(U) = (\frac{1}{2},1] = Y' \cap (\frac{1}{2},\frac{3}{2})$. Pero veamos que $U\notin \tau_S$. Supongamos lo contrario, es decir, que $U=X'\cap V$ con $V$ abierto de $X$. Entonces, $\pi^{-1}(V)$ es un abierto de $Y$. Como $[1]\in U$ y $[1]\in X'$, tenemos que $[1]\in V$. Por lo tanto, $1\in \pi^{-1}(V)$. Pero $\pi^{-1}(V)$ es un abierto de $[0,2]$. Por lo tanto, existe $0<\varepsilon<1$ tal que $1+\epsilon \in \pi^{-1}(V)$. Esto quiere decir que $A\in V$. Pero entonces $0\in\pi^{-1}(V)$ y así existe $0<\varepsilon'<\frac{1}{2}$ tal que $\varepsilon'\in\pi^{-1}(V)$. Esto implica que $[\varepsilon']\in V$ y así como $[\varepsilon']\in X'$ tendríamos que $[\varepsilon']\in X'\cap V = U$. Pero por la definición de $U$ esto es absurdo. Entonces, $U\in \tau_C$ pero $U\notin\tau_S$ y así las dos topologías no necesariamente son iguales.
+
+Ahora bien, si añadimos la hipótesis que $X'$ sea abierto o cerrado en $X$, \textbf{sí} es cierto que $\tau_C = \tau_S$. 
+
+Supongamos primero que $X'$ es abierto. Sea $U\in\tau_C$. Queremos ver que $U\in\tau_S$ (pues la otra inclusión ya la tenemos). Notemos que $\pi^{-1}(U) = \left.\pi\right|_{Y'}^{-1}(U)$ pues $U\subseteq X'$. Pero por definición de la topología cociente, $\left.\pi\right|_{Y'}^{-1}(U)$ es abierto en $Y'$. Es decir, $\left.\pi\right|_{Y'}^{-1}(U) = Y'\cap W$ donde $W$ es un abierto de $Y$. Pero $Y'=\pi^{-1}(X')$ es un abierto de $Y$. Esto quiere decir que $\left.\pi\right|_{Y'}^{-1}(U)$ es un abierto de $Y$ pues es intersección de abiertos de $Y$. Esto quiere decir que $U$ es abierto en $X$, por definición de la topología cociente. Y listo.
+
+Si $X'$ es cerrado, sea $U\in\tau_C$ y $F=X'-U$. $F$ es cerrado (para la topología cociente) en $X'$. Entonces, $\pi^{-1}(F) = \left.\pi\right|_{Y'}^{-1} (F) = Y'\cap H$ donde $H$ es un cerrado de $Y$. Pero $Y'=\pi^{-1}(X')$ es cerrado en $Y$ por ser $X'\subseteq X$ cerrado. Entonces, $\pi^{-1}(F)$ es cerrado en $Y$. Por la definición de la topología cociente, tenemos que $F$ es cerrado en $X$. Por lo tanto, $U=X' - F = X'\cap (X-F)$ que es abierto en $X'$ por ser $X-F$ abierto.
+\end{obs}
+
+\begin{ex}[Espacios Proyectivos]
+Sea $k$ un cuerpo, $Y=k^{n+1}-\{0\}$. Definimos $x\Rel y$ si y sólo si existe $\lambda\in k-\{0\}$ tal que $x=\lambda y$. El espacio cociente $X=Y/\Rel = \mathbb{P}^n_{k}$ se llama el \textbf{espacio proyectivo} de dimensión $n$ sobre $k$. Estudiemos la recta y el plano proyectivo real.
+
+Primero, veamos que $\mathbb{P}^1_{\RR}\simeq S^1$. Sabemos que $S^1 \simeq [0,1]/\tilde{\Rel}$ donde $\tilde{\Rel}$ identifica al $0$ con el $1$ del intervalo. Sea $\theta:[0,1]\to \RR^2 - \{0\}$ dada por $\theta(t)=(\cos(\pi t),\sin (\pi t))$. Sea $\pi :\RR^2-\{0\}\to\mathbb{P}^1_\RR$ dada por $\pi(a,b) = (a:b)$ donde $(a:b)$ es la clase de $(a,b)$. Notemos que $\pi\circ\theta$ es $\tilde{\Rel}$-compatible. Entonces, por la propiedad del cociente, existe un único $\overline{\theta}:[0,1]/\tilde{\Rel}\to \mathbb{P}_\RR^1$ tal que $\overline{\theta}\circ\tilde{\pi} = \pi\circ\theta$. Es claro que $\overline{\theta}$ es sobreyectiva pues $\pi\circ\theta$ lo es. También es fácil ver que $\overline{\theta}$ es inyectiva. Veamos que es abierta. Esto probará que $\overline{\theta}$ es un homeomorfismo entre la recta proyectiva y $S^1$.
+
+Sea $U$ abierto en $[0,1]/\tilde{\Rel}$. Quiero ver que $\overline{\theta}(U)$ es abierto en $\mathbb{P}_\RR^1$. Veamos que para todo $p\in \overline{\theta}(U)$ existe un abierto $U_p$ tal que $p\in U_p \subseteq \overline{\theta}(U)$. En tal caso, $\overline{\theta}(U)=\displaystyle\bigcup_{p\in\overline{\theta}(U)}U_p$, que es abierto por ser unión de abiertos. Para esto tenemos dos casos: o bien $p=(1:0)$ o no. Hagamos sólo el primer caso, pues el segundo es totalmente análogo. En el caso que $p=(1:0) = \pi\circ\theta(0)=\pi\circ\theta(1)$ entonces $[\{0,1\}]\in U$ y así $\{0,1\}\in\tilde{\pi}^{-1}(U)$ es un abierto de $[0,1]$. Entonces, existen $a,b\in (0,1)$ tales que $0<a<b<1$ con $[0,a)\cup (b,1]\subseteq \tilde{\pi}^{-1}(U)$. Definimos entonces $U_p = \pi\circ\theta( [0,a)\cup (b,1])$. Queremos ver que $\pi^{-1}(U_p)$ es abierto. Pero esto es fácil de ver, es la intersección de $\RR^2$ con la región que está encerrada entre dos rectas. Entonces, $U_p = \pi\circ\theta([0,a)\cup (b,1]) = \overline{\theta}\circ\tilde{\pi}([0,a)\cup(b,1]) \subseteq \overline{\theta}(\tilde{\pi}(\tilde{\pi}^{-1}(U))) = \overline{\theta}(U)$ donde la última igualdad se da por la suryectividad de $\tilde{\pi}$.
+
+Ahora estudiemos el plano proyectivo $\mathbb{P}^2_\RR$. Consideremos $U=\{(x_0:x_1:x_2) : x_0\neq 0\}$. Esto está bien definido pues si $(x_0:x_1:x_2) = (y_0:y_1:y_2)$ entonces existe $\lambda\neq 0$ tal que $x_i = \lambda y_i$ y así $x_0=0$ si y sólo si $y_0=0$. Este conjunto $U$ es abierto. En efecto, $\pi^{-1}(U) = \{\RR^3 - (\{0\}\times\RR^2)\}$ que es un abierto de $\RR^3 - \{0\}$. Más aún, $U$ es homeomorfo a $\RR^2$. Para ver esto, definimos $\alpha:\RR^2\to U$ como $\alpha(x_1,x_2) = (1:x_1:x_2)$ y $\beta:U\to\RR^2$ como $\beta(x_0:x_1:x_2) = (\frac{x_1}{x_0},\frac{x_2}{x_0})$. Es fácil ver la buena definición de $\beta$ y que $\alpha\circ\beta = \id_U$ y $\beta\circ\alpha=\id_{\RR^2}$. Veamos que $\alpha$ y $\beta$ son continuas. Para ver que $\alpha$ es continua, miremos el siguiente diagrama:
+
+\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ \RR^2 \arrow[]{dr}[font=\normalsize]{\pi\circ\iota} \arrow[hookrightarrow]{d}[left, font=\normalsize]{\iota}\arrow[]{r}[font=\normalsize]{\alpha}& U \arrow[hookrightarrow]{d}[right,font=\normalsize]{\iota} \\
+\RR^3 - \{0\}\arrow[]{r}[font=\normalsize]{\pi}& \mathbb{P}^2_\RR 
+\end{tikzcd}
+\end{center}
+
+Por la propiedad de la topología subespacio, tenemos que $\alpha$ es continua pues $\pi\circ\iota$ lo es. Ahora, para la situación con $\beta$ tenemos el siguiente diagrama:
+
+\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ \RR^3 - (\{0\}\times\RR^2) \arrow[]{d}[font=\normalsize]{\pi} \arrow[dashed]{dr}[font=\normalsize]{\beta\circ\pi}&\\
+U\arrow[]{r}[font=\normalsize]{\beta}& \RR^2 & 
+\end{tikzcd}
+\end{center}
+Como $U$ es abierto y tiene la topología subespacio, ésta coincide con la topología cociente y así $\beta$ es continua pues $\beta\circ\pi$ es trivialmente continua pues es $\beta\circ\pi(x_0,x_1,x_2) = (\frac{x_1}{x_0},\frac{x_2}{x_0})$ con cada coordenada continua.
+
+Además, tenemos que $\overline{U} =\mathbb{P}^2_\RR$. En efecto, sea $(x_0:x_1:x_2)\in U^c$. Entonces, $x_0=0$ y $p_n = (\frac{1}{n},x_1,x_2)\in\RR^3 - \{0\}$ es una sucesión de puntos que tiende a $(0,x_1,x_2)$ y así como $\pi$ es continua, $(\frac{1}{n}:x_1:x_2)$ tiende a $(0:x_1:x_2)$, que implica que está en la clausura. Y listo.
+
+También, $U^c\simeq \mathbb{P}^1_\RR (\simeq S^1)$. Para probar esto definimos al igual que antes una ida y una vuelta continuas. Sea $\alpha':U^c\to \mathbb{P}_\RR^1$ dada por $\alpha'(0:x_1:x_2)=(x_1:x_2)$ y $\beta':\mathbb{P}_\RR^1\to U^c$ dada por $\beta'(x_1:x_2) = (0:x_1:x_2)$. Claramente $\alpha\circ\beta = \id_{U^c}$ y $\beta\circ\alpha = \id_{\mathbb{P}_\RR^1}$. Para ver que son continuas, la situación de $\alpha'$ está dada por el siguiente diagrama:
+\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+ \{0\}\times\RR^2 \arrow[]{dr}[font=\normalsize]{\pi\circ\iota} \arrow[hookrightarrow]{d}[left, font=\normalsize]{\iota}\arrow[]{r}[font=\normalsize]{\pi}& U^c \arrow[]{d}[right,font=\normalsize]{\alpha'} \\
+\RR^3 - \{0\}\arrow[]{r}[font=\normalsize]{\pi}& \mathbb{P}^1_\RR 
+\end{tikzcd}
+\end{center}
+Como $U^c$ es cerrado, la topología cociente y subespacio coinciden y así, usando la propiedad de la topología cociente, $\alpha'$ es continua pues $\alpha'\circ \pi = \pi \circ\iota$ lo es. Para $\beta'$ la situación es:
+\begin{center}\begin{tikzcd}[row sep=3.3em,column sep=4em,minimum width=2em]
+\RR^2-\{0\} \arrow[dashed]{dr}[font=\normalsize]{\pi\circ\iota} \arrow[hookrightarrow]{d}[left, font=\normalsize]{\iota}\arrow[]{r}[font=\normalsize]{\pi}& \mathbb{P}_\RR^1 \arrow[]{d}[right,font=\normalsize]{\beta'} \\
+\{0\}\times (\RR^2 - \{0\})\arrow[]{r}[font=\normalsize]{\pi}& U^c
+\end{tikzcd}
+\end{center}
+Acá por la propiedad de la topología cociente de $\mathbb{P}_\RR^1$, como $\beta'\circ \pi = \pi\circ \iota$ es continua, $\beta'$ debe serlo.
+
+Podemos definir una recta en $\mathbb{P}_\RR^2$ como un conjunto $\pi(P-\{0\})$ con $P$ un plano de $\RR^3$. Notemos que si $P=\{x_0=0\}$ entonces $\pi(P-\{0\}) = U^c\simeq \mathbb{P}_\RR^1$. Es decir, la recta proyectiva es una recta bajo esta definición. Si el plano $P$ está dado por $P=\{(x_0,x_1,x_2)\in\RR^3 : ax_0 + bx_1 + cx_2 = 0\}$ entonces $\pi(P-\{0\}) = (x_0:x_1:\frac{-ax_0 - bx_1}{c})$. Entonces, esto nos da que $\pi(P-\{0\})\cap U = (1:\frac{x_1}{x_0} : -\frac{a}{c} - \frac{b}{c}\frac{x_1}{x_0})$. Si reemplazamos $t=\frac{x_1}{x_0}$ eso es $(1:t:-\frac{a}{c}-\frac{b}{c}t)$, que es una fórmula como las rectas usuales. De forma similar, es fácil ver que se tiene $\pi(P-\{0\}) \cap U^c = \{(0:1:-\frac{b}{c})\}$. Es decir, las rectas proyectivas consisten de una recta en el sentido usual y un punto "`en el infinito"'. Además, dos rectas distintas siempre se cortan en un único punto. Sean $\pi(P_1-\{0\})\neq \pi(P_2-\{0\})$ dos rectas distintas. Notemos que $\pi(P_1-\{0\})\cap \pi(P_2-\{0\}) = \pi(P_1\cap P_2 - \{0\})$. En efecto, la inclusión $(\supseteq)$ es obvia y para ver la otra, si $(x_0:x_1:x_2)=(y_0:y_1:y_2)$ con $(x_0:x_1:x_2)\in P_1-\{0\}$ y $(y_0:y_1:y_2)\in P_2-\{0\}$ entonces existe $\lambda\neq 0$ tal que $(x_0,x_1,x_2) = \lambda (y_0,y_1,y_2)$ y así estos puntos están en la intersección de los dos planos. Pero como $P_1\cap P_2$ son dos planos que pasan por el origen, su intersección es una recta que pasa por el origen y así $\pi(P_1\cap P_2 - \{0\})$ es exactamente un punto. Entonces, todo par de rectas proyectivas se intersecan en exactamente un punto.
+
+\end{ex}
+
+\section{Conexión}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Se dice que dos abiertos $U,V\subseteq X$ \textbf{desconectan} a $X$ si $U,V\neq \emptyset$, $U\cup V = X$ y $U\cap V = \emptyset$. Si existen dos abiertos que desconectan a $X$ se dice que $X$ es \textbf{disconexo}. En caso contrario, se dice \textbf{conexo}.
+\end{defn}
+
+\begin{ex}
+$\RR$ con la topología del orden es conexo. En efecto, supongamos que $U,V$ son abiertos que desconectan a $\RR$ y $u\in U$, $v\in V$. Podemos suponer sin pérdida de la generalidad que $u<v$. Sea $S=U\cap (-\infty,v]$ y $s=\sup S$ (existe por ser $S\neq\emptyset$ ya que $u\in S$). Si $s\in U$, entonces $s\neq v$ y así $s<v$ y existen $p,q\in\RR$ tales que $p<s<q<v$ con $(p,q)\subseteq U$. Entonces, $\frac{s+q}{2}\in S$, pero esto es absuerdo por ser $\frac{s+q}{2}> s$. Pero tampoco podemos tener $s\in V$ pues existirían $p,q$ con $(p,q)\subseteq V$ y $s\in (p,q)$, lo que implica $S\subseteq (-\infty, p]$ y así $s\leq p$. Absurdo.
+\end{ex}
+
+\begin{defn}
+Sea $X$ un espacio topológico y $A\subseteq X$. $A$ es disconexo si es disconexo con la topología subespacio. Equivalentemente, $A$ es disconexo si existen $U,V$ abiertos de $X$ tales que \begin{itemize}\item $A\cap U\neq \emptyset$, $A\cap V\neq\emptyset$. \item $A\cap U\cap V = \emptyset$. \item $A\subseteq U\cup V$. \end{itemize}
+\end{defn}
+
+\begin{ex}
+Si $\sharp A=1$ entonces $A$ es conexo. Además, con la misma demostración que antes, podemos ver que cualquier intervalo de $\RR$ es conexo.
+\end{ex}
+
+\begin{prop}
+Sea $X$ un espacio topológico. $A_i\subseteq X$ para todo $i\in I$. Si $A_i$ es conexo para todo $i\in I$ y $\displaystyle\bigcap_{i\in I}A_i \neq \emptyset$ entonces $\displaystyle\bigcup_{i\in I}A_i$ es conexo.
+\begin{proof}
+Supongamos que no. Entonces, sean $U,V\subseteq X$ tales que $\left(\displaystyle\bigcup_{i\in I} A_i\right)\cap U\neq \emptyset$, $\left(\displaystyle\bigcup_{i\in I} A_i\right)\cap V\neq \emptyset$; $\left(\displaystyle\bigcup_{i\in I} A_i\right)\cap U\cap V = \emptyset$ y $\left(\displaystyle\bigcup_{i\in I} A_i\right)\subseteq U\cup V$. Sea $x\in\displaystyle\bigcap_{i\in I}A_i\subseteq \displaystyle\bigcup_{i\in I}A_i$. Entonces, $x\in U\cup V$. Sin pérdida de la generalidad, podemos suponer que $x\in U$. Como $\left(\displaystyle\bigcup_{i\in I}A_i\right)\cap V\neq\emptyset$ existe un $i_0\in I$ tal que $A_{i_0}\cap V\neq\emptyset$. Pero entonces $U,V$ desconectan a $A_{i_0}$. En efecto, $U\cap A_{i_0}\neq \emptyset$ pues $x\in U\cap A_{i_0}$, $V\cap A_{i_0}\neq\emptyset$ por cómo elegimos a $V$; $A_{i_0}\cap U\cap V\subseteq \left( \displaystyle\bigcup_{i\in I}A_i\right) \cap U\cap V = \emptyset$ y finalmente, $A_{i_0}\subseteq \displaystyle\bigcup_{i\in I}A_i\subseteq U\cup V$. Y estamos.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $(A_n)_{n\in\NN}$ una sucesión de subconjuntos conexos en $X$ de modo tal que $A_n\cap A_{n+1}\neq\emptyset \;\forall n\in \NN$. Entonces, $\displaystyle\bigcup_{n\in\NN} A_n$ es conexo.
+\begin{proof}
+Consideremos $B_n = \displaystyle\bigcup_{i=1}^n A_i$. Veamos que $B_n$ es conexo para cada $n\in\NN$. $B_1 = A_1$ lo es por definición. Ahora, simplemente es proceder por inducción. Como tenemos $B_{n+1} = B_n \cup A_{n+1}$ y $B_n\cap A_{n+1}\neq \emptyset$ tenemos que $B_{n+1}$ es conexo por la proposición anterior. Ahora, notemos que $\displaystyle\bigcup_{n\in\NN} A_n = \displaystyle\bigcup_{n\in\NN} B_n$ y que $B_1\subseteq \displaystyle\bigcap_{n\in\NN} B_n$. Usando la proposición anterior estamos.
+\end{proof} 
+\end{prop}
+
+\begin{prop}
+Sea $A$ conexo y $A\subseteq B\subseteq \overline{A}$. Entonces $B$ es conexo. En particular, $\overline{A}$ es conexo.
+\begin{proof}
+Sean $U,V$ abiertos que desconectan a $B$. Es decir, $B\cap U\cap V = \emptyset$, $B\cap U\neq\emptyset$, $B\cap V\neq \emptyset$ y $B\subseteq U\cup V$. Si tuvieramos que $U\cap A=\emptyset$, entonces $A\subseteq U^c$ y así $\overline{A}\subseteq U^c$ por ser $U$ abierto. Entonces, $B\subseteq \overline{A}\subseteq U^c$ y así $B\cap U = \emptyset$. Absurdo. Entonces, $U\cap A\neq \emptyset$ y de forma análoga $V\cap A\neq\emptyset$. Entonces, $U$ y $V$ desconectarían a $A$ pues $A\cap U\cap V\subseteq B\cap U\cap V = \emptyset$ y $A\subseteq B\subseteq U\cup V$. Absurdo pues $A$ era conexo. Entonces $B$ debe ser conexo y la proposición sigue.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $f:X\to Y$ una función continua y $A\neq\emptyset$ un subconjunto conexo no vacío de $X$. Entonces $f(A)$ es conexo.
+\begin{proof}
+Supongamos que $U,V$ desconectan a $f(A)$. Entonces $f^{-1}(U), f^{-1}(V)$ son abiertos en $X$ por la continuidad de $f$. Es fácil comprobar, usando propiedades conjuntistas de preimagen, que $f^{-1}(U)$ y $f^{-1}(V)$ desconectan a $A$ y queda como ejercicio.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sean $(X_i)_{i\in I}$ espacios topológicos. $X_i$ es conexo para todo $i\in I$ si y sólo si $\displaystyle\prod_{i\in I}X_i$ (provisto de la topología producto) es conexo.
+\begin{proof}
+$(\Longleftarrow)$ Notemos que $X_i = \pi_i\left(\displaystyle\prod_{i\in I}X_i\right)$ y como $\pi$ es continua y $\displaystyle\prod_{i\in I}X_i$ es conexo, por la proposición anterior, resulta que $X_i$ es conexo.
+
+$(\Longrightarrow)$ Supongamos que $U,V$ son abiertos que desconectan a $\displaystyle\prod_{i\in I}X_i$. Sean $x=(x_i)_{i\in I}\in U$ y $y=(y_i)_{i\in I}\in V$. Por definición de la topología producto, podemos tomarnos $W$ abierto con $W=\displaystyle\prod_{i\in I} W_i$ donde $W_i$ es abierto en $X_i$, $I' = \{i\in I : W_i \subsetneq X_i\}$ es finito y $x\in W\subseteq U$. Sea $X' = (x_i')_{i\in I}$ definida por $x_i = \begin{cases} x_i \text{ si }i\in I' \\ y_i \text{ si }i\notin I' \end{cases}$ Entonces, $x'\in W\subseteq U$. Sea $z_0=x'$ y $z_{\sharp I'} = y$. Entonces, tengo una sucesión de elementos $z_1,\ldots , z_{\sharp I - 1}\in\displaystyle\prod_{i\in I}X_i$ tal que $z_j$ y $z_{j+1}$ sólo difieren en una coordenada. Como $z_0\in U$ y $z_{\sharp I'}\in V$, existe algún $j_0$ tal que $z_{j_0}\in U$ y $z_{j_0 + 1}\in V$. Supongamos que $(z_{j_0})_i \neq (z_{j_0 + 1})_i$ sólo si $i=h_0$. Consideremos $\alpha:X_{h_0}\to\displaystyle\prod_{i\in I} X_i$ dada por $(\alpha(x))_{i} = (z_{j_0})_i = (z_{j_0 + 1})_{i}$ si $i\neq h_0$ y $(\alpha(x))_{h_0} = x$. Como $\alpha$ es continua por la propiedad universal de la topología producto, tenemos que $\alpha(X_{h_0})$ es conexo. Pero veamos que $U,V$ desconectan a $\alpha(X_{h_0})$. En efecto, notemos que $U\cap \alpha(X_{h_0})\neq \emptyset$ pues $z_{j_0}\in U\cap \alpha(X_{h_0})$ y $V\cap\alpha(X_{h_0})\neq\emptyset$ pues $z_{j+1}\in V\cap \alpha(X_{h_0})$; tenemos que $U\cap V\cap \alpha(X_{h_0})\subseteq U\cap V\cap \displaystyle\prod_{i\in I}X_i = \emptyset$ y finalmente que $\alpha(X_{h_0})\subseteq \displaystyle\prod_{i\in I}X_i = U\cup V$. Absurdo, que provino de suponer que el producto no es conexo.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Decimos que $A\subseteq X$ es una \textbf{componente conexa} si $A$ es un conexo maximal (es decir, $A\subseteq B$ con $B$ conexo implica $A=B$).
+\end{defn}
+
+\begin{prop}
+Se puede escribir $X=\bigsqcup_{i\in I} A_i$ donde $A_i$ son las componentes conexas de $X$.
+\begin{proof}
+
+Veamos la doble inclusión. $(\supseteq)$ es obvia. Sea $x\in X$. Consideremos entonces $B_x = \{B\subseteq X : x\in B, B\text{ conexo}\}$. Notemos que $\{x\}\in B_x$. Definimos entonces $C_x = \displaystyle\bigcup_{B\in B_x}B$. Notemos que $C_x$ es conexo pues es una unión de conexos con intersección no vacía (pues $x$ está en la intersección). Pero además, $C_x$ es maximal, pues si $C_x \subseteq C$ con $C$ conexo, entonces $x\in C_x\subseteq C$ y así $C$ es un conexo que contiene a $x$ y está en la unión de todos esos. Es decir, $C\subseteq C_x$ y así $C_x=C$. Entonces, $X=\displaystyle\bigcup_{x\in X}C_x$. Ahora, si $A_1,A_2$ son dos componentes conexas con $A_1\cap A_2\neq\emptyset$. Entonces $A_1\cup A_2$ es conexo por ser la unión de conexos con intersección no vacía. Pero $A_1,A_2\subseteq A_1\cup A_2$ y así $A_1=A_2=A_1\cup A_2$ por ser conexos maximales. Entonces dos componentes o bien son disjuntas o son la misma y listo.
+
+\end{proof}
+\end{prop}
+
+\begin{obs}
+De la demostración anterior vemos que si $A$ es una componente conexa de $X$ y $x\in A$ entonces $A=C_x$. Por lo tanto, si $X=\bigsqcup_{i\in I}A_i$ con $A_i$ las componentes conexas, entonces si $B\subseteq X$ es conexo existe un $i_0\in I$ tal que $B\subseteq A_{i_0}$.
+\end{obs}
+
+\begin{lem}
+Cada componente conexa es un conjunto cerrado.
+\begin{proof}
+Supongamos que $X=\bigsqcup_{i\in I}A_i$ con $A_i$ sus componentes conexas. Notemos que $\overline{A_i}$ es conexo para todo $i\in I$ por ser la clausura de un conexo. Pero como son conexos maximales, tenemos que $\overline{A_i}=A_i$ y así son cerrados.
+\end{proof}
+\end{lem}
+
+\begin{obs}
+Las componentes conexas no necesariamente son abiertas. Consideremos por ejemplo $X=\{0\}\cup \{\frac{1}{n}:n\in\NN\}\subseteq \RR$. Si $A\subseteq X$ y $A$ tiene al menos dos elementos, entonces $A$ no es conexo. En efecto, si $\{a,b\}\subseteq A$ con $a<b$, entonces tomo $a<y<b$ irracional y los abiertos $U=X\cap (-\infty,y)$ y $V=X\cap (y,+\infty)$ desconectan a $A$. Por lo tanto, cada componente conexa consiste de un único punto. Pero notemos que $\{0\}$ no es abierto en $X$. Si lo fuera, existiría $U\subseteq\RR$ abierto tal que $\{0\}=U\cap X$. Pero si $0\in U$ entonces existe $\varepsilon>0$ tal que $(0,\varepsilon)\subseteq U$ y así si tomo $n$ tal que $\frac{1}{n}<\varepsilon$ obtengo $\frac{1}{n}\in U\cap X$. Absurdo.
+\end{obs}
+
+\begin{defn}
+Un espacio topológico $X$ se dice \textbf{totalmente disconexo} si cada componente conexa es sólo un punto.
+\end{defn}
+
+\begin{obs}
+Supongamos que $X$ tiene topología discreta. Entonces si $A$ es una componente conexa y $\{a,b\}\subseteq A$ tenemos que $\{a\}$ y $A-\{a\}$ son abiertos de $A$ que lo desconectan. Entonces, si $X$ tiene la topología discreta es totalmente disconexo. La vuelta es falsa como lo muestra el ejemplo anterior (o como lo muestra $\QQ$ con la topología subespacio de $\RR$).
+\end{obs}
+
+\begin{defn}
+Sea $X$ un espacio topológico, $x,y\in X$. Decimos que $x,y$ están \textbf{arcoconectados} si existe $\gamma:[0,1]\to X$ continua tal que $\gamma(0)=x$ y $\gamma(1)=y$. Un espacio topológico se dice \textbf{arcoconexo} si para todos $x,y\in X$ tenemos que $x,y$ están arcoconectados. Decimos que $A\subseteq X$ es arcoconexo si lo es con la topología subespacio.
+\end{defn}
+
+\begin{obs}
+Es muy fácil ver que estar arcoconectados es una relación de equivalencia. En efecto, es reflexiva pues $x$ esta arcoconectado con sí mismo vía $\gamma:[0,1]\to X$ dada por $\gamma(t)=x\;\forall t\in [0,1]$. Si $x,y$ están arcoconectados y $\gamma:[0,1]\to X$ es tal que $\gamma(0)=x$ y $\gamma(1)=y$ simplemente consideramos $\gamma'(t) = \gamma(1-t)$ y eso nos dice que $y,x$ están arcoconectados. Finalmente, si $x,y$ están arcoconectados y $y,z$ también, tenemos dos arcos $\gamma:[0,1]\to X$, $\sigma:[0,1]\to X$ con $\gamma(0)=x, \gamma(1)=y, \sigma(0)=y, \sigma(1)=z$ podemos considerar la concatenación $\gamma\cdot\sigma(t) = \begin{cases}\gamma(2t) \text{ si }0\leq t\leq \frac{1}{2} \\ \sigma(2t-1) \text{ si }\frac{1}{2}\leq t\leq 1\end{cases}$ que es un arco que une a $x$ y $z$.
+\end{obs}
+
+\begin{lem}
+Sea $X$ un espacio topológico arcoconexo. Entonces $X$ es conexo.
+\begin{proof}
+Sea $x\in X$. Para cada $y\in X$ sea $\gamma_y:[0,1]\to X$ continua con $\gamma_y(0)=x$ y $\gamma_y(1)=y$. Es decir, $x\in\gamma_y([0,1])$ para todo $y\in X$. Además, $\gamma_y([0,1])$ es conexo para cada $y$ por ser la imagen de un conexo por una función continua. Como $X=\displaystyle\bigcup_{y\in X}\gamma_y([0,1])$ y $x\in\displaystyle\bigcap_{y\in X}\gamma_y([0,1])$, debemos tener que $X$ es conexo. Y estamos.
+\end{proof}
+\end{lem}
+
+\begin{ex}
+Veamos que conexo no implica arcoconexo.
+
+Sea $K = \{0\}\cup \{\frac{1}{n}:n\in\NN\}$. Sea $\RR^2$ con su topología usual. Consideremos entonces el \textit{peine del topólogo} $C = (K\times [0,1]) \cup ([0,1]\times \{0\})$ visto con la topología subespacio en $\RR^2$.
+\begin{figure}
+	\centering
+		\includegraphics[width=0.28\textwidth]{C:/Users/Nacho/Documents/Latex/Facultad/combspace.png}
+	\caption{El peine del topólogo}
+	\label{fig:combspace}
+\end{figure}
+
+Ahora consideremos $X = C\cup \{(0,1)\}$. Es decir, le agregamos un punto. Notemos que como $C\subseteq X\subseteq \overline{C}$ (donde la clausura la vemos en $X$) y $C$ es conexo (pues en particular es arcoconexo) debemos tener que $X$ es conexo. Pero veamos que $X$ no es arcoconexo. Supongamos que $\gamma:[0,1]\to X$ es tal que $\gamma(0)=(0,1)$ y $\gamma(1)=(1,1)$. $X$ es arcoconexo si y sólo existe ese arco (pues $C$ es arcoconexo y el punto que agregué lo tengo que poder conectar con todos los otros, pero al ser una relación de equivalencia y el resto del espacio arcoconexo, conectarlo con uno es lo mismo que con cualquier otro). Consideremos $f:[0,1]\to\RR$ la función dada por $f(t) = \gamma_2(t) - \gamma_1(t)$ donde $\gamma(t) = (\gamma_1(t),\gamma_2(t))$. Es obvio que $f$ es continua, $f(0)=1$ y $f(1)=0$. Por el teorema de los valores intermedios, existe $\tilde{t}\in (0,1)$ tal que $f(\tilde{t}) = \frac{1}{2}$. Como $\{t\in [0,1] : f(t)=\frac{1}{2}\}$ es no vacío y acotado inferiormente, podemos considerar su ínfimo $t_0$. Como a su vez, ese conjunto es cerrado (por ser la preimagen de $\{\frac{1}{2}\}$ por $f$ que es continua), tenemos que $t_0$ está en el conjunto (pues tiene una sucesión de puntos del conjunto que tienden a él por ser ínfimo y está por ser cerrado el conjunto). Entonces, $f(t_0)=\frac{1}{2}$. Esto quiere decir que $f(t)>\frac{1}{2}$ para todo $t\in [0,t_0)$. Sea $t_1\in [0,t_0)$. Tenemos que $\gamma([0,t_1])$ es conexo y $(0,1)\in \gamma([0,t_1])\subseteq X\cap \{(x,y)\in\RR^2 : y-x>\frac{1}{2}\}\subseteq \QQ\times \RR$. Si $\gamma(t_1)\neq (0,1)$ entonces $\gamma(t_1)=(a,b)$ con $a\in\QQ$, $a>0$. Sea $y\in\RR-\QQ$ con $0<y<a$. Entonces, $U = X\cap ((-\infty,y)\times \RR)$ y $V=X\cap ((y,+\infty)\times \RR)$ desconectan a $\gamma([0,t_1])$. Por lo tanto, $\gamma(t_1)=(0,1)$ para todo $t_1\in [0,t_0)$. Pero $f(t_0) = \frac{1}{2} = \lim_{t\to t_0} f(t) = 1$. Absurdo.
+
+\end{ex}
+
+\begin{prop}
+Sea $X$ un espacio topológico. Si $(A_i)_{i\in I}\subseteq X$ es una familia de arcoconexos con $\displaystyle\bigcap_{i\in I}A_i\neq\emptyset$, entonces $\displaystyle\bigcup_{i\in I}A_i$ es arcoconexo.
+\begin{proof}
+Supongamos que $x,y\in \displaystyle\bigcup_{i\in I}A_i$. Entonces, existen dos índices $j_1,j_2\in I$ tales que $x\in A_{j_1}, y\in A_{j_2}$. Si $a\in \displaystyle\bigcap_{i\in I}A_i$ entonces como $A_{j_1}$ es arcoconexo, tengo que $x$ y $a$ están arcoconectados y como $A_{j_2}$ es arcoconexo tengo que $a$ e $y$ están arcoconectados. Como la relación es transitiva, $x$ e $y$ están arcoconectados y listo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X$ un espacio topológico y $(A_i)_{i\in\NN}$ una sucesión de arcoconexos. Si $A_n\cap A_{n+1}\neq\emptyset$ para cada $n\in\NN$ tenemos que $\displaystyle\bigcup_{i\in \NN}A_i$ es arcoconexo.
+\begin{proof}
+Definimos $B_n = \displaystyle\bigcup_{i=1}^n A_i$. Podemos probar inductivamente que cada $B_n$ es conexo (pues $B_n = B_{n-1}\cup A_n$ que tienen intersección no vacía y son conexos), y como $B_1\subseteq \displaystyle\bigcap_{i\in \NN}B_i$, la intersección es no vacía y por la proposición anterior debe resultar que $\displaystyle\bigcup_{i\in\NN}B_i$ es conexo. Pero $\displaystyle\bigcup_{i\in\NN}A_i = \displaystyle\bigcup_{i\in\NN}B_i$ y listo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X$ un espacio topológico arcoconexo y $f:X\to Y$ una función continua. Entonces $f(X)$ es arcoconexo.
+\begin{proof}
+Si $a,b\in f(X)$ entonces $a=f(x), b=f(y)$ con $x,y\in X$. Como $X$ es arcoconexo, existe $\gamma:[0,1]\to X$ continua tal que $\gamma(0)=x, \gamma(1)=y$. Pero entonces consideremos el arco $f\circ\gamma:[0,1]\to f(X)$ es continua por ser composición de continuas y $f\circ\gamma(0)=f(x),f\circ\gamma(1)=f(y)$. La proposición sigue.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $(X_i)_{i\in I}$ una familia de espacios topológicos. $X_i$ es arcoconexo para todo $i\in I$ si y sólo si $X=\displaystyle\prod_{i\in I}X_i$ (provisto de la topología producto) es arcoconexo.
+\begin{proof}
+$(\Longleftarrow)$ Es obvio pues $X_i = \pi_i(X)$ que es arcoconexo por ser $\pi_i$ continua y la proposición anterior.
+
+$(\Longrightarrow)$ Sean $x=(x_i)_{i\in I}, y = (y_i)_{i\in I}$ con $x_i,y_i\in X_i$ para cada $i\in I$. Como cada $X_i$ es arcoconexo, existe $\gamma_i:[0,1]\to X_i$ continua tal que $\gamma_i(0)=x_i, \gamma_i(1)=y_i$. Defino entonces $\gamma(t) = (\gamma_i(t))_{i\in I}$. Por la propiedad universal de la topología inicial, como $\pi_i\circ\gamma = \gamma_i$ es continua para cada $i\in I$, resulta que $\gamma$ es continua y listo.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Sea $X$ un espacio topológico. $A\subseteq X$ es una \textbf{componente arcoconexa} de $X$ si es un subconjunto conexo maximal (es decir, si $A\subseteq B$ con $B$ arcoconexo, entonces $A=B$).
+\end{defn}
+
+\begin{prop}
+Podemos escribir $X=\displaystyle\bigsqcup_{i\in I}A_i$ con $A_i$ las componentes arcoconexas.
+\begin{proof}
+Es totalmente análoga a la demostración para las componentes conexas.
+\end{proof}
+\end{prop}
+
+\begin{obs}
+Como cada componente arcoconexa es conexa, está metida en una componente conexa. Entonces, cada componente conexa se parte como unión disjunta de componentes arcoconexas.
+\end{obs}
+
+\begin{obs}
+No vale que cada componente arcoconexa sea necesariamente cerrada. El ejemplo ya lo vimos y es el del peine del topólogo.
+\end{obs}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Decimos que $X$ es \textbf{localmente (arco)conexo en $x\in X$} si para todo $U$ abierto, $U\subseteq X$ con $x\in U$, existe un abierto (arco)conexo $V_x$ tal que $x\in V_x\subseteq U$. El espacio $X$ se dice \textbf{localmente (arco)conexo} si es localmente (arco)conexo para todo $x\in X$.
+\end{defn}
+
+\begin{ex} Veamos un par de ejemplos:
+\begin{itemize}
+\item $\RR$ es conexo y localmente conexo.
+\item $\RR-\{0\}$ no es conexo pero sí localmente conexo.
+\item El peine del topólogo es conexo pero no localmente conexo.
+\item $\QQ$ no es conexo ni localmente conexo
+\end{itemize}
+Todos estos mismos ejemplos sirven si cambiamos conexo por arcoconexo y localmente conexo por localmente arcoconexo.
+\end{ex}
+
+\begin{obs}
+$X$ es localmente conexo si y sólo si tiene una base formada por abiertos conexos. De la misma forma, $X$ es localmente arcoconexo si tiene una base formada por abiertos arcoconexos.
+\end{obs}
+
+\begin{prop}
+Sea $X$ un espacio topológico. $X$ es localmente conexo si y sólo si para todo $U\subseteq X$ abierto las componentes conexas de $U$ son abiertas en $X$ (o equivalentemente en $U$).
+\begin{proof}
+$(\Longrightarrow)$ Sea $C$ una componente conexa de $U$. Si $x\in C\subseteq U$, existe $V_x$ abierto conexo tal que $x\in V_x\subseteq U$. Como $V_x$ es conexo, está en la componente, $V_x\subseteq C$. Entonces, $C=\displaystyle\bigcup_{x\in C}V_x$ es una unión de abiertos y así es abierto.
+
+$(\Longleftarrow)$ Sea $U$ abierto, $x\in U$. Sea $C$ la componente conexa de $U$ que tiene a $x$. Entonces $x\in C\subseteq U$ y así $X$ es localmente conexo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X$ localmente arcoconexo. Entonces, cada componente conexa de $X$ es una componente arcoconexa de $X$.
+\begin{proof}
+Sea $C$ una componente conexa. Luego, podemos escribir (en virtud de una observación anterior) $C=\displaystyle\bigsqcup_{i\in I}C_i$ donde $C_i$ son componentes arcoconexas de $X$. Cada $C_i$ es un abierto de $X$ por la proposición anterior. Si $\sharp I > 1$ entonces, tomo $i_0\in I$ y considero los abiertos $U=C_{i_0}$, $V=\displaystyle\bigsqcup_{i\in I -\{i_0\}} C_i$ son abiertos disjuntos que desconectan a $C$. Absurdo, por lo tanto $C$ es una componente arcoconexa y listo.
+\end{proof}
+\end{prop}
+
+\section{Separabilidad}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Decimos que $X$ es \textbf{regular} si para todo $x\in X$ y $F\subseteq X$ cerrado tal que $x\in F$, existen dos abiertos $U,V$ disjuntos tales que $x\in U$, $F\subseteq V$.
+\end{defn}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Decimos que $X$ es \textbf{normal} si para todos cerrados $F_1,F_2\subseteq X$ disjuntos existen abiertos $U,V$ disjuntos con $F_1\subseteq U$, $F_2\subseteq V$.
+\end{defn}
+
+\begin{obs}
+Que un espacio sea normal no implica que sea regular. Por ejemplo, el Espacio de Sierpinski es normal pero no regular. Un ejemplo similar es $X=\{a,b,c\}$ con $\tau = \{\emptyset, \{a\}, \{a,b\}, \{c\}, \{a,c\},X\}$. La vuelta tampoco es cierta (es decir, regular no implica normal) pero el contraejemplo lo veremos más adelante.
+\end{obs}
+
+\begin{defn}
+Sea $X$ un espacio topológico.
+\begin{itemize}\item Decimos que $X$ es $\mathrm{T}_0$ si para todos los $x,y\in X$ con $x\neq y$ existe un abierto $U$ tal que tiene a uno de $\{x,y\}$ pero no al otro.
+\item Decimos que $X$ es $\mathrm{T}_1$ si para todos los $x,y\in X$ con $x\neq y$ existen $U,V$ abiertos tales que $x\in U, y\notin U, x\notin V, y\in V$.
+\item Decimos que $X$ es $\mathrm{T}_2$ (o Hausdorff) si para todos los $x,y\in X$ con $x\neq y$ existen abiertos $U,V$ disjuntos tales que $x\in U$, $y\in V$.
+\item Decimos que $X$ es $\mathrm{T}_3$ si es $\mathrm{T}_1$ y regular.
+\item Decimos que $X$ es $\mathrm{T}_4$ si es $\mathrm{T}_1$ y normal.
+\end{itemize}
+\end{defn}
+
+\begin{lem}
+$X$ es $\mathrm{T}_1$ si y sólo si para todo $x\in X$ tenemos que $\{x\}$ es cerrado.
+\begin{proof}
+$(\Longrightarrow)$ Sea $x\in X$. Para todo $y\neq x$ existe $V_y$ abierto de $X$ tal que $y\in V_y$ pero $x\notin V_y$. Entonces, $X-\{x\} = \displaystyle\bigcup_{y\in Y}V_y$ es abierto por ser unión de abiertos. Por lo tanto $\{x\}$ es cerrado.
+
+$(\Longleftarrow)$ Simplemente notemos que $U = \{y\}^c$ y $V = \{x\}^c$ son abiertos y por definición tenemos que $x\in U, y\notin U, x\notin V, y\in V$.
+\end{proof}
+\end{lem}
+
+\begin{cor}
+Si $X$ es un espacio topológico vale la cadena de implicaciones $$\mathrm{T}_4\Longrightarrow \mathrm{T}_3 \Longrightarrow \mathrm{T}_2\Longrightarrow \mathrm{T}_1\Longrightarrow \mathrm{T}_0$$
+\end{cor}
+
+\begin{ex}
+Sea $X=\NN$ con la topología cofinita. $X$ es $\mathrm{T}_1$. Pero, para todos $U,V$ abiertos no vacíos su intersección es no vacía (es más, hay infinitos puntos en la intersección). Esto quiere decir que $X$ no es normal ni regular.
+
+Ahora, $X=\{a,b,c\}$ con $\tau = \{\emptyset, \{a\},\{b,c\},X\}$ no es $\mathrm{T}_1$ (ni siquiera es $\mathrm{T}_0$) pero es normal y regular.
+\end{ex}
+
+
+\end{document}
+
+
