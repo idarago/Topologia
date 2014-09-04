@@ -850,11 +850,120 @@ Si $X$ es un espacio topológico vale la cadena de implicaciones $$\mathrm{T}_4\
 \end{cor}
 
 \begin{ex}
-Sea $X=\NN$ con la topología cofinita. $X$ es $\mathrm{T}_1$. Pero, para todos $U,V$ abiertos no vacíos su intersección es no vacía (es más, hay infinitos puntos en la intersección). Esto quiere decir que $X$ no es normal ni regular.
+Notemos que si $X=\{a,b,c\}$ con $\tau = \{\emptyset, \{a\},\{b,c\},X\}$ no es $\mathrm{T}_1$ (ni siquiera es $\mathrm{T}_0$) pero es normal y regular.
 
-Ahora, $X=\{a,b,c\}$ con $\tau = \{\emptyset, \{a\},\{b,c\},X\}$ no es $\mathrm{T}_1$ (ni siquiera es $\mathrm{T}_0$) pero es normal y regular.
+Sea $X=\NN$ con la topología cofinita. $X$ es $\mathrm{T}_1$. Pero, para todos $U,V$ abiertos no vacíos su intersección es no vacía (es más, hay infinitos puntos en la intersección). Esto quiere decir que $X$ no es normal ni regular. Además, es $\mathrm{T}_1$ pero no $\mathrm{T}_2$.
+
+Otro ejemplo es $\RR^n$ con la topología de Zariski. Si $p=(p_1,\ldots , p_n)$ y $q=(q_1,\ldots , q_n)$ con $p\neq q$ entonces existe un $i$ tal que $p_i\neq q_i$. Consideremos $U = \{x_i = q_i\}^c$ y $V=\{x_i = p_i\}^c$. Son abiertos por definición y $p\in U, q\in V$. Eso quiere decir que es $\mathrm{T}_1$. Ahora bien, veamos que no es $\mathrm{T}_2$. Para eso, veamos que si $U,V$ sob abiertos no vacíos entonces $U\cap V\neq \emptyset$. Si $U=F_{S_1}^c$, $V=F_{S_2}^c$ con $S_1,S_2\subseteq \RR[x_1,\ldots , x_n]$ y $F_S=\{x\in\RR^n : f(x) = 0\;\forall f\in S\}$. Como $U,V\neq \emptyset$ tenemos que $F_{S_1},F_{S_2}\neq\RR^n$ y así existen $f,g\neq 0$ con $f\in S_1, g\in S_2$. Por lo tanto, $fg\neq 0$ y como $\RR$ es infinito, existe un $z\in\RR^n$ tal que $fg(z)\neq 0$. Pero entonces $f(z)\neq 0$ y $g(z)\neq 0$. Es decir, $z\in U\cap V$.
+
+Consideremos $X=\RR$ con la topología que tiene por base: $$\{(a,b) : a,b\in\RR, a<b\} \cup \{(a,b)\cap K^c : a,b\in\RR\}$$ donde $K=\{\frac{1}{n}:n\in\NN\}$. Es muy fácil verificar que esto es una base. Notemos que $K$ es cerrado en esta topología pues $K^c = K^c \cap \RR = K^c \cap \left(\displaystyle\bigcup_{n\in\NN} (-n,n)\right) = \bigcup_{n\in\NN} (-n,n)\cap K^c$ que es unión de abiertos y así abierto. Además, es obvio que este espacio es $\mathrm{T}_2$ pues puedo separar sólo con abiertos de la forma $(a,b)$. Para ver que no es $\mathrm{T}_3$ veamos que no existen dos abiertos disjuntos $U,V$ tales que $0\in U$ y $K\subseteq V$. Supongamos que sí. Como $0\in U$, existe un abierto $\tilde{U}$ de la base tal que $0\in \tilde{U}\subseteq U$ y necesariamente como $\tilde{U}\cap K = \emptyset$ tenemos que $\tilde{U} = (a,b)\cap K^c$ para ciertos $a,b\in\RR$ con $a<b$. Además, existe $n_0\in\NN$ tal que $\frac{1}{n_0}<b$ y un abierto $\tilde{V}$ de la base tal que $\frac{1}{n_0}\in\tilde{V}\subseteq V$. Como $\frac{1}{n_0}\in\tilde{V}$, no puede ser que $\tilde{V} = (c,d)\cap K^c$. Entonces, $\tilde{V} = (c,d)$ para ciertos $c,d\in\RR$, $c<d$. Es fácil ver que $\dfrac{\max\{c,\frac{1}{n_0 + 1}\}+\frac{1}{n_0}}{2} \in \tilde{U}\cap\tilde{V} = \emptyset$. Esto es un absurdo, que vino de suponer que el espacio era $\mathrm{T}_3$.
+
+Si $(X,d)$ es un espacio métrico, entonces es $\mathrm{T}_4$. En efecto, es obvio que $X$ es $\mathrm{T}_1$ (es más, es igual de fácil ver que $X$ es $\mathrm{T}_2$). Ahora, para ver que es normal, sean $F_1,F_2$ cerrados disjuntos. Consideremos $f:X\to\RR$ dada por $f(x)=\dfrac{d(x,F_1)}{d(x,F_1)+d(x,F_2)}$. Como el denominador es $0$ si y sólo si $d(x,F_1)=d(x,F_2)=0$ y eso pasa si y sólo si $x\in F_1\cap F_2 = \emptyset$. Entonces, como $f$ es cociente de continuas con denominador no nulo, es continua. Ahora, si $x\in F_1$ tenemos $f(x)=0$ y si $x\in F_2$ tenemos $f(x)=1$. Consideramos entonces $U=f^{-1}((-\infty,\frac{1}{2}))$ y $V=f^{-1}((\frac{1}{2},+\infty))$. Es claro que $F_1\subseteq U, F_2\subseteq V$ y $U\cap V = \emptyset$.
+
+Si $X$ es un conjunto bien ordenado provisto de la topología del orden, entonces es $\mathrm{T}_4$ (más generalmente, no hace falta pedir bien ordenado, alcanza con totalmente ordenado pero la demostración es más dificil). Notemos que para todos $x,y\in X$ con $x<y$ el conjunto $(x,y]$ es abierto. Hay que ver dos casos: si $y\geq z$ para todo $z\in X$ entonces $(x,y] = (x,+\infty)$ y así es abierto por definición. Si no, existe $z_0\in X$ tal que $y<z_0$. Entonces, $Z=\{z\in X : z>y\}$ es no vacío y así tiene elemento mínimo $z_1$. Entonces, $(x,y] = (x,z_1)$. De manera análoga, tenemos que $(-\infty,y]$ es abierto. Primero veamos que el espacio es $\mathrm{T}_1$. En efecto, si $x\neq y$ con $x<y$ entonces $U = (-\infty,y)$ y $V=(x,+\infty)$ son abiertos que los separan. Ahora, veamos que es normal. Para eso, sean $A,B$ cerrados disjuntos. Para cada $a\in A$, $a\in B^c$, que es abierto. Entonces, existe $I_a$ intervalo tal que $a\in I_a\subseteq B^c$. Además, podemos suponer que $I_a = (x_a,a]$ con $x_a\in X\cup\{-\infty\}$. Ahora, para cada $b\in B$ existe $I_b$ tal que $b\in I_b\subseteq A^c$ con $I_n = [b,y_b)$ con $y_b \in X\cup\{+\infty\}$. Sean $U=\displaystyle\bigcup_{a\in A} I_a$ y $V=\displaystyle\bigcup_{b\in B} I_b$ con $A\subseteq U$ y $B\subseteq V$ y son abiertos por ser uniones de abiertos. Además, son disjuntos. Si no, existirían $z\in X,\,a\in A,\,b\in B$ con $z\in [b,y_b) \cap (x_a,a]$. Como $a\neq b$, supongamos $b<a$. Entonces, $x_a < z\leq b < a$ y así $b\in (x_a, a]\subseteq B^c$. Absurdo.
 \end{ex}
 
+\begin{prop}
+Si $X$ es $\mathrm{T}_0$, entonces $Y\subseteq X$ con topología subespacio también es $\mathrm{T}_0$.
+\begin{proof}
+Sean $x,y\in Y$. En particular, como $x,y\in X$ que es $\mathrm{T}_0$, existe $U$ abierto tal que $x\in U, y\notin U$. Entonces, simplemente tomamos $U\cap Y$.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Si $X$ es $\mathrm{T}_1$, entonces $Y\subseteq X$ con topología subespacio también es $\mathrm{T}_1$.
+\begin{proof}
+Sean $x,y\in Y$. En particular, como $x,y\in X$ que es $\mathrm{T}_2$, existen $U,V$ abiertos tales que $x\in U, y\in V$. Entonces, simplemente tomamos $U\cap Y$ y $V\cap Y$.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Si $X$ es $\mathrm{T}_2$, entonces $Y\subseteq X$ con topología subespacio también es $\mathrm{T}_2$.
+\begin{proof}
+Sean $x,y\in Y$. En particular, como $x,y\in X$ que es $\mathrm{T}_2$, existen $U,V$ abiertos disjuntos tales que $x\in U, y\in V$. Entonces, simplemente tomamos $U\cap Y$ y $V\cap Y$.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $(X_i)_{i\in I}$ una familia de espacios topológicos. Entonces, $X_i$ es $\mathrm{T}_0$ para todo $i\in I$ si y sólo si $\displaystyle\prod_{i\in I}X_i$ es $\mathrm{T}_0$.
+\begin{proof}
+$(\Longleftarrow)$ Para cada $i\in I$, sea $\mathrm{inc}_{i}:X_i\to \displaystyle\prod_{i\in I}X_i$ que simplemente manda a un $x_i\in X_i$ a $(\mathrm{inc}_i(x_i))_j = \begin{cases} x_i \text{ si }j=i \\ y_j \text{ si } j\neq i\end{cases}$ donde $y_j\in X_j$ es una constante arbitraria para cada $j\in I$. Esto nos dice que como $X_i$ es homeomorfo con la imagen $\mathrm{inc}_i(X_i)$, que es un subespacio de $\displaystyle\prod_{i\in I}X_i$, debe ser $\mathrm{T}_0$ y listo.
+
+$(\Longrightarrow)$ Sean $x=(x_i)_{i\in I}, y=(y_i)_{i\in I}$ con $x\neq y$. Entonces, existe un $i_0\in I$ tal que $x_{i_0}\neq y_{i_0}$. Entonces, existe un abierto $\tilde{U}$ de $X_{i_0}$ tal que $x_{i_0}\in \tilde{U}, y_{i_0}\notin \tilde{U}$. Consideremos $U=\pi_{i_0}^{-1}(\tilde{U})$ abierto del producto (por ser las proyecciones continuas) y además $x\in U$ pero $y\notin U$. Y listo.
+\end{proof}
+\end{prop}
+
+\begin{obs}
+Con exactamente la misma demostración que en la proposición anterior, podemos probar que una familia de espacios topológicos son todos $\mathrm{T}_1$ si y sólo si el producto es $\mathrm{T}_1$ y son todos $\mathrm{T}_2$ si y sólo si el producto es $\mathrm{T}_2$.
+\end{obs}
+
+\begin{prop}
+Sea $X$ un espacio topológico $\mathrm{T}_2$ y $\alpha:\Gamma\to X$ una red. Si $(x_\alpha)_{\alpha\in\Gamma}$ tiende a $x$ y tiende a $y$, entonces $x=y$. Es decir, los límites son únicos.
+\begin{proof}
+Si $x\neq y$ entonces existen $U,V$ abiertos disjuntos con $x\in U, y\in V$. Como $x_\alpha\to x$, existe $\alpha_0\in\Gamma$ tal que si $\alpha\geq \alpha_0$ entonces $x_\alpha\in U$. Además, como $x_\alpha\to y$, existe $\alpha_1\in\Gamma$ tal que si $\alpha\geq\alpha_1$ entonces $x_\alpha\in V$. Pero como $\Gamma$ es un conjunto dirigido, existe $\alpha_2\in\Gamma$ tal que $\alpha_2\geq \alpha_0,\alpha_1$. Pero esto implica que si $\alpha\geq \alpha_2$ entonces $x_\alpha \in U\cap V$. Absurdo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Sea $X$ un espacio topológico y $\Delta = \{(x,x) : x\in X\}\subseteq X\times X$ la diagonal (con topología producto). Entonces, son equivalentes:
+\begin{enumerate}
+\item $X$ es $\mathrm{T}_2$.
+\item $\Delta$ es cerrado.
+\end{enumerate}
+\begin{proof}
+$(1)\Longrightarrow (2)$: Veamos que $\Delta^c$ es abierto. Sea $(x,y)\in\Delta^c$, es decir, $x\neq y$. Como $X$ es $\mathrm{T}_2$, existen abiertos disjuntos $U_{x,y}, V_{x,y}$ tales que $x\in U_{x,y}, y\in V_{x,y}$. La condición de que sean disjuntos se traduce como que $(U_{x,y}\times V_{x,y})\cap \Delta = \emptyset$. Es decir, $\Delta^c = \displaystyle\bigcup_{(x,y)\in\Delta^c} U_{x,y}\cap V_{x,y}$, que es una unión de abiertos y así abierto.
+
+$(2)\Longrightarrow (1)$: Sea $x\neq y$. Entonces, $(x,y)\in \Delta^c$, que es abierto. Es decir, existen $U,V$ abiertos en $X$ tales que $(x,y)\in U\times V\subseteq \Delta^c$. Pero esto es, $x\in U, y\in V$ y $U\cap V=\emptyset$. Y listo.
+\end{proof}
+\end{prop}
+
+\begin{lem}
+Sean $f,g:Y\to X$ dos funciones continuas con $X$ un espacio $\mathrm{T}_2$. Entonces, $\{y\in Y : f(y)=g(y)\}$ es cerrado.
+\begin{proof}
+Notemos que $h:Y\to X\times X$ definida por $h(y) = (f(y),g(y))$ es continua por la propiedad universal de la topología producto. Entonces, $\{y\in Y : f(y)=g(y)\} = h^{-1}(\Delta)$, que es cerrado por ser preimagen de un cerrado por una función continua. El lema sigue.
+\end{proof}
+\end{lem}
+
+\begin{prop}
+Si $f,g:Y\to X$ son funciones continuas, $X$ es $\mathrm{T}_2$ y $A\subseteq Y$ es un denso tal que $f(y)=g(y)$ para todo $y\in A$, entonces $f=g$.
+\begin{proof}
+Simplemente es notar que $A\subseteq \{y\in Y : f(y)=g(y)\}$, que es cerrado por el lema anterior y así contiene a la clausura de $A$. Pero eso es todo $Y$ por ser $A$ denso. Es decir, $Y = \{y\in Y : f(y)=g(y)\}$ y así $f=g$. Como queríamos probar.
+\end{proof}
+\end{prop}
+
+\begin{teo}
+Sea $X$ un espacio topológico regular que admite una base numerable. Entonces, $X$ es normal.
+\begin{proof}
+Sean $A,B\subseteq X$ cerrados disjuntos. Para cada $x\in A$, existen $\tilde{U}_x, \tilde{V}_x$ abiertos tales que $x\in \tilde{U}_x$, $B\subseteq \tilde{V}_x$ y $\tilde{U}_x\cap\tilde{V}_x = \emptyset$. Sea $\mathscr{B}$ una base numerable de abiertos de $X$. Existe $U_x\in\mathscr{B}$ tal que $x\in U_x\subseteq \tilde{U}_x$. Pero como $U_x\subseteq \tilde{V}_x^c$, tenemos que $\overline{U_x}\subseteq \tilde{V}_x^c$ por ser $\tilde{V}_x^c$ cerrado. Entonces, $\overline{U}_x\cap B = \emptyset$. De forma análoga, para cada $y\in B$ exoste $V_y\in\mathscr{B}$ abierto con $y\in V_y$ y $\overline{V}_y\cap A = \emptyset$. Como $\{U_x\}_{x\in A}\subseteq \mathscr{B}$, debe ser numerable. Entonces, sea $\{U_n\}_{n\in\NN}$ una enumeración de $\{U_x\}_{x\in A}$. De la misma forma, sea $\{V_n\}_{n\in\NN}$ una enumeración de $\{V_y\}_{y\in B}$. Consideremos entonces $\hat{U} = \displaystyle\bigcup_{n\in\NN} U_n$ y $\hat{V} = \displaystyle\bigcup_{n\in\NN} V_n$. Es claro que son abiertos pues son uniones de abiertos. Además, $A\subseteq\hat{U}$ y $B\subseteq\hat{V}$. También sabemos que $A\cap\hat{V}=\emptyset$ pues $A\cap V_n=\emptyset$ para todo $n\in\NN$. Por la misma razón, $B\cap\hat{U} = \emptyset$. 
+
+Vamos a definir $\tilde{U}_n = U_n \cap \left(\displaystyle\bigcap_{i=1}^n \overline{V}_i^c\right)$ y $\tilde{V}_n = V_n \cap \left(\displaystyle\bigcap_{i=1}^n \overline{U}_i^c\right)$. Son abiertos por ser intersecciones finitas de abiertos. Tomemos entonces $U=\displaystyle\bigcup_{n\in\NN}\tilde{U}_n$ y $V = \displaystyle\bigcup_{n\in\NN}\tilde{V}_n$. Estos abiertos nos van a servir. En efecto, $A\subseteq U, B\subseteq V$ (pues si $a\in A$ existe $n_0$ tal que $a\in U_{n_0}$ pero $\overline{V}_{n_0}\cap A = \emptyset$).
+
+Quiero ver que $U\cap V = \emptyset$. Sea $z\in U\cap V$. Entonces, existen $k,\ell$ tales que $z\in \tilde{U}_k\cap \tilde{V}_\ell$. Sin pérdida de la generalidad, $k\geq \ell$. Pero tenemos que $z\in \tilde{U}_k = U_k \cap \left(\displaystyle\bigcap_{i=1}^k \overline{V}_k^c\right)\subseteq V_\ell^c$ y $z\in \tilde{V}_\ell = V_l \cap \left(\displaystyle\bigcap_{i=1}^\ell \overline{U}_i^c\right) \subseteq V_\ell$. Absurdo.
+\end{proof}
+\end{teo}
+
+\begin{prop}
+Sea $X$ regular, $Y\subseteq X$ un subespacio. Entonces $Y$ es regular.
+\begin{proof}
+Sea $F\subseteq Y$ cerrado en $Y$ y sea $y\in Y$, $y\notin F$. Entonces, existe $\tilde{F}$ cerrado en $X$ tal que $F=\tilde{F}\cap Y$, con $y\notin \tilde{F}$ (pues si estuviera en $\tilde{F}$, como está en $Y$ estaría en la intersección, que es $F$). Como $X$ es regular, existen abiertos $U,V$ de $X$ tales que $y\in U$, $\tilde{F}\subseteq V$ y $U\cap V=\emptyset$. Tomo entonces $U\cap Y$ y $V\cap Y$, y listo.
+\end{proof}
+\end{prop}
+
+\begin{cor}
+Si $X$ es $\mathrm{T}_3$, entonces $Y\subseteq X$ con topología subespacio también es $\mathrm{T}_3$.
+\begin{proof}
+Simplemente es notar que la propiedad vale para $\mathrm{T}_1$ y para normal.
+\end{proof}
+\end{cor}
+
+\begin{prop}
+Sea $(X_i)_{i\in I}$ una familia de espacios topológicos. $X_i$ es regular para todo $i\in I$ si y sólo si $\displaystyle\prod_{i\in I}X_i$ es regular.
+\begin{proof}
+$(\Longleftarrow)$ Es la misma idea que antes, vemos a cada $X_i$ como un subespacio del producto vía la inclusión y nos queda que es regular por ser subespacio de un regular.
+
+$(\Longrightarrow)$ Sea $x=(x_i)_{i\in I}$ y $F$ cerrado (no vacío) con $x\notin F$. Entonces, $x\in F^c$ que es abierto. Esto implica que existe un abierto $X'$ de la base tal que $x\in X'\subseteq F^c$. Por lo tanto, $X' = \displaystyle\prod_{i\in I} X_i'$ con $X_i'$ abierto de $X_i$ y $I' = \{i\in I : X_i'\neq X_i\}$ finito. Para cada $i\in I'$, $x_i\in X_i'$, y así $x_i\notin X_i'^c$, que es cerrado. Como cada espacio es regular, existen $U_i,V_i$ abiertos de $X_i$ con $x\in U_i$, $X_i'^c\subseteq V_i$ y $U_i\cap V_i = \emptyset$. Ahora simplemente defino $U = \displaystyle\bigcap_{i\in I'} \pi_i^{-1}(U_i)$ y $V=\displaystyle\bigcap_{i\in I'} \pi_i^{-1}(V_i)$ que son abiertos por ser intersecciones finitas de abiertos. Es claro que $x\in U$ pues $x_i\in U_i$ para cada $i\in I'$. También es claro que $F\subseteq V$ pues $F\subseteq X'^c$ y $X'^c\subseteq V$. Resta ver que $U\cap V = \emptyset$. Pero si $z = (z_i)_{i\in I} \in U\cap V$, existe $i_0\in I'$ tal que $z\in \pi_{i_0}^{-1}(V_{i_0})$. Esto quiere decir que $z_{i_0}\in V_{i_0}$, y de la misma forma $z_{i_0}\in U_{i_0}$. Absurdo. 
+\end{proof}
+\end{prop}
 
 \end{document}
 
