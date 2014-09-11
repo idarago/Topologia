@@ -812,7 +812,7 @@ Sea $C$ una componente conexa. Luego, podemos escribir (en virtud de una observa
 \end{proof}
 \end{prop}
 
-\section{Separabilidad}
+\section{Axiomas de Separabilidad}
 
 \begin{defn}
 Sea $X$ un espacio topológico. Decimos que $X$ es \textbf{regular} si para todo $x\in X$ y $F\subseteq X$ cerrado tal que $x\in F$, existen dos abiertos $U,V$ disjuntos tales que $x\in U$, $F\subseteq V$.
@@ -1016,9 +1016,136 @@ En el caso que $A$ es infinito, consideremos $F:X\to\RR^\NN$ donde $F(x)= (f_{ij
 
 Sea $U$ un abierto de $X$ y sea $x\in U$. Quiero ver que $F(x)\subseteq U_x\subseteq F(U)$ para algún $U_x$ abierto. Si $U=X$ es obvio. Si no, existe $(i,j)\in A$ con $x\in B_i$, $\overline{B_i}\subseteq B_j$. Sea $W_x$ el abierto de $\RR^\NN$ que consiste en copias de $\RR$ salvo en el $(i,j)$-ésimo lugar que tiene $(0,+\infty)$. Es claro que $F(x)\subseteq W_x$ pues $f_{ij}(x)=1$ por ser $x\in B_i\subseteq\overline{B_i}$ y no hay nada que verificar en las otras coordenadas. Quiero ver que el abierto $U_x = W_x\cap F(X)$ está incluído en $F(U)$. Sea $z\in F(x')\in W_x$. Si $x'\notin U$, entonces $x'\in U^c$ y así $x'\in B_j^c$. Entonces, $f_{ij}(x')=0$. Pero esto quiere decir que $f(x')\notin W_x$. Absurdo. Por lo tanto, $x'\in U$ y así $z\in F(U)$ y la función es abierta como queríamos.
 
-En el caso que $A$ se finito, hacemos el mismo argumento pero consideramos $F:X\to \RR^n$ con $n=\sharp A$ y notamos que eso es un espacio métrico con la distancia infinito.
+En el caso que $A$ se finito, hacemos el mismo argumento pero consideramos $F:X\to \RR^n$ con $n=\sharp A$ y notamos que eso es un espacio métrico con la distancia infinito. Y estamos.
 \end{proof}
 \end{teo}
+
+\begin{defn}
+Un espacio topológico $X$ se dice \textbf{completamente regular} si para todo $x\in X$ y $F\subseteq X$ cerrado con $x\notin F$ existe alguna función $f:X\to [0,1]$ continua tal que $f(x)=1$ y $f(y)=0$ para todo $y\in F$.
+\end{defn}
+
+\begin{defn}
+Un espacio topológico $X$ se dice \textbf{Tychonoff} si es completamente regular y $\mathrm{T}_4$. A los espacios Tychonoff también se les dice $\mathrm{T}_{3,5}$.
+\end{defn}
+
+\begin{prop}
+Si un espacio topológico $X$ es $\mathrm{T}_4$ entonces es Tychonoff.
+\begin{proof}
+Sea $x\in X$ y $F\subseteq X$ cerrado con $x\notin F$. Como el espacio es $\mathrm{T}_1$, tenemos que $\{x\}$ es cerrado y así $\{x\}$ y $F$ son cerrados disjuntos. Por el Lema de Urysohn, tengo una función continua que los separa y listo.
+\end{proof}
+\end{prop}
+
+\begin{prop}
+Si un espacio topológico $X$ es completamente regular, entonces es regular.
+\begin{proof}
+Sea $x\in X$ y $F\subseteq X$ cerrado con $x\notin F$. Sea $f:X\to [0,1]$ continua tal que $f(x)=0$ y $f(y)=1$ para todo $y\in F$. Tomemos entonces $U = f^{-1}([0,\frac{1}{2}))$ y $V=f^{-1}((\frac{1}{2},1])$. Estos abiertos $U,V$ son disjuntos y $x\in U$, $F\subseteq V$. Como queríamos.
+\end{proof}
+\end{prop}
+
+\begin{cor}
+Si $X$ es Tychonoff entonces es $\mathrm{T}_3$.
+\end{cor}
+
+\begin{obs}
+Notemos que $X$ normal no implica que sea completamente regular. En efecto, el espacio de Sierpinski es un ejemplo. Otro ejemplo levemente más interesante es $X=\{a,b,c\}$ con $\tau=\{\emptyset, \{a\}, \{a,b\}, \{c\}, \{a,c\},X\}$.
+\end{obs}
+
+\begin{lem}
+Sea $X$ un espacio topológico completamente regular. Si $Y\subseteq X$ es un subespacio, entonces $Y$ es completamente regular.
+\begin{proof}
+Sea $x\in Y$ y $F\subseteq Y$ cerrado con $x\notin F$. Entonces, existe $F'\subseteq X$ cerrado tal que $F=F'\cap Y$. Además, $x\notin F'$ pues si no tendríamos que $x\in F$. Como $X$ es completamente regular, existe $f: X\to [0,1]$ tal que $f(x)=1$ y $f(y)=0$ para todo $y\in F'$. Es claro que $\left. f\right|_{Y}$ sirve para separar a $x$ de $F$. Y listo.
+\end{proof}
+\end{lem}
+
+\begin{cor}
+Si $X$ es un espacio topológico Tychonoff entonces $Y\subseteq X$ subespacio también es Tychonoff.
+\end{cor}
+
+\begin{lem}
+Sea $(X_i)_{i\in I}$ una familia de espacios topológicos. Entonces, cada $X_i$ con ${i\in I}$ es completamente regular si y sólo si $\displaystyle\prod_{i\in I}X_i$ es completamente regular.
+\begin{proof}
+$(\Longleftarrow)$ Podemos mirar a $X_i$ como un subespacio de $\displaystyle\prod_{i\in I}X_i$ incluyéndolo en la $i$-ésima coordenada y dejando todo el resto fijo. Por el lema anterior, subespacio de un completamente regular es completamente regular y listo.
+
+$(\Longrightarrow)$ Sea $x = (x_i)_{i\in I}\in\displaystyle\prod_{i\in I}X_i$ y $F\subseteq \displaystyle\prod_{i\in I}X_i$ cerrado con $x\notin F$. Entonces, $x\in F^c$, que es abierto. Por lo tanto, existe un abierto de la base que contiene a $x$ y que queda contenido en $F^c$. Es decir, $x\in X'\subseteq F^c$ donde $X' = \displaystyle\prod_{i\in I'} X_i'$ con cada $X_i'\subseteq X_i$ abierto y $I' =\{i\in I : X_i' \neq X_i\}$ finito. Para cada $i\in I'$ tenemos $x_i\in X_i'$ y así $x_i\notin X_i'^c$, que es cerrado. Como cada $X_i$ es completamente regular, existen $f_i:X_i\to [0,1]$ continuas tales que $f_i(x_i) = 1$ y $\left. f_i\right|_{X_i'^c} = 0$. Consideramos entonces $f:X\to [0,1]$ dada por $f(x) = \displaystyle\prod_{i\in I'}f_i(x_i)$. Es claramente continua y es obvio que $f(x)=1$. Además, como $F\subseteq X'^c$, si $y\in F$, existe $i_0\in I'$ tal que $y_{i_0}\notin X_{i_0}'$ y así $f_{i_0}(y_{i_0})=0$. Entonces, $f(y)=0$, como queríamos.
+\end{proof}
+\end{lem}
+
+\begin{obs}
+Veamos que Tychonoff no implica $\mathrm{T}_4$. En efecto, si consideramos $S=(-\infty,\Omega)$ como en el ejemplo de "`productos de espacios normales no necesariamente son normales"', ya probamos que $S\times\overline{S}$ no es $\mathrm{T}_4$, pero $S$ y $\overline{S}$ son $\mathrm{T}_4$ y así Tychonoff. Entonces, su producto es Tychonoff pero no $\mathrm{T}_4$.
+\end{obs}
+
+\begin{obs}
+Veamos que $\mathrm{T}_3$ no implica que el espacio sea Tychonoff.
+
+Para cada entero par $n$, sea $T_n = \{n\}\times (-1,1)$ y sea $X_1 = \displaystyle\bigcup_{n\text{ par}} T_n$. Sea ahora $(t_k)_{k\in\NN}$ una sucesión creciente de reales positivos que converja a $1$. Para cada entero impar, sea $T_n = \displaystyle\bigcup_{k\geq 1}\{(x,y)\in\RR^2 : (x-n)^2 + y^2 = t_k^2\}$ y sea $X_2 = \displaystyle\bigcup_{n\text{ impar}}T_n$. Definamos entonces $X= \displaystyle\bigcup_{n\in\NN}T_n \cup \{a,b\}$. Vamos a darle una topología a $X$ tomando por base a:
+\begin{itemize}
+\item Todo punto de $X_2$ es aislado excepto los puntos $(n,t_k)$.
+\item Un entorno de $(n,t_k)$ consiste de todos los elementos, salvo finitos, de $\{(x,y)\in\RR^2 : (x-n)^2 + y^2 = t_k^2\}$.
+\item Un entorno de un punto $(n,y)\in X_1$ consiste de todos los elementos, salvo finitos de $\{(z,y) : n-1 < z < n+1\}\cap (T_{n-1}\cup T_n)$.
+\item Un entorno de $a$ es un conjunto $U_c$ que contiene a $a$ y todos los puntos de $X_1\cup X_2$ con primera coordenada mayor que $c$.
+\item Un entorno de $b$ es un conjunto $V_d$ que contiene a $b$ y todos los puntos de $X_1\cup X_2$ con primera coordenada menor que $d$.
+\end{itemize}
+
+Es fácil chequear que $X$ es $\mathrm{T}_1$ y regular. Es decir, que es $\mathrm{T}_3$. Ahora bien, si fuera completamente regular existiría $f:X\to [0,1]$ continua con $f(a)=0$ y $f(b)=1$. Pero si $f$ es continua en $X$, debe resultar que $f(a)=f(b)$. En efecto, es fácil ver que si $f$ es continua, en cada arco resulta que es constante (salvo numerables puntos) y así podemos trazar una recta horizontal que evita a esos numerables puntos. Entonces, $f$ sobre los segmentos verticales en los $n$ pares queda constante (pues me puedo acercar por ambos lados del arco y uso la unicidad del límite). Luego, $f(a)=f(b)$ porque ambos son el límite cuando $n$ tiende a $-\infty$ y $+\infty$ respectivamente de $f(n)$, que es constante.
+
+\end{obs}
+
+\section{Compacidad}
+
+\begin{defn}
+Sea $X$ un espacio topológico. Se dice que $X$ es \textbf{compacto} si todo cubrimiento por abiertos admite algún subcubrimiento finito. Es decir, si $X = \displaystyle\bigcup_{i\in I}U_i$ con $U_i$ abierto para todo $i\in I$, entonces existe $I'\subseteq I$ finito tal que $X=\displaystyle\bigcup_{i\in I'} U_i$.
+\end{defn}
+
+\begin{prop}
+Un espacio topológico $X$ es compacto si y sólo si cuando $\displaystyle\bigcap_{i\in I}F_i = \emptyset$ con $F_i$ cerrados para todo $i\in I$, existe $I'\subseteq I$ finito con $\displaystyle\bigcap_{i\in I'}F_i = \emptyset$.
+\begin{proof}
+Simplemente es tomar complemente y usar las leyes de De Morgan.
+\end{proof}
+\end{prop}
+
+\begin{defn}
+Sea $X$ un espacio topológico y $\mathscr{F}=(F_i)_{i\in I}$ una familia de conjuntos. Decimos que $\mathscr{F}$ tiene la \textbf{Propiedad de Intersección Finita} (PIF) si para cada subfamilia finita y no vacía de $\mathscr{F}$ la intersección de sus elementos es no vacía.
+\end{defn}
+
+\begin{prop}
+Un espacio topológico $X$ es compacto si y sólo si toda familia de cerrados que satisface la PIF tiene intersección no vacía.
+\begin{proof}
+Simplemente es usar la proposición anterior.
+\end{proof}
+\end{prop}
+
+\begin{ex}
+Si $X$ es finito con cualquier topología es compacto (no hay nada que probar, todo cubrimiento es finito). Es fácil ver que $X$ con la topología cofinita es compacto. Además, si $k$ es un cuerpo, entonces $k^n$ con la topología de Zariski también es compacto. En efecto, supongamos que $\emptyset = \displaystyle\bigcap_{i\in I} F_{S_i}$ con $S_i\subseteq k[x_1,\ldots,x_n]$. Entonces, $\displaystyle\bigcap_{i\in I}F_{S_i} = F_{\bigcup_{i\in I}S_i} = F_{\left\langle \bigcup_{i\in I}S_i\right\rangle}$. Por el Teorema de la Base de Hilbert, existe $T\subseteq\displaystyle\bigcup_{i\in I}S_i$ finito tal que $\left\langle\displaystyle\bigcup_{i\in I}S_i\right\rangle = T$. Pero luego, $F_T\supseteq F_{\bigcup_{i\in I'}S_i}$ con $I'\subseteq I$ finito. Esto es $\displaystyle\bigcap_{i\in I'}F_{S_i}=\emptyset$ un conjunto finito de cerrados cuya intersección es vacía.
+\end{ex}
+
+\begin{defn}
+Sea $X$ un espacio topológico y $A\subseteq X$. Decimos que $A$ es compacto si es compacto con la topología subespacio. Equivalentemente, si para cualquier cubrimiento por abiertos $A\subseteq \displaystyle\bigcup_{i\in I}U_i$ existe un subcubrimiento finito $A\subseteq\displaystyle\bigcup_{i\in I'} U_i$ con $I'\subseteq I$ finito.
+\end{defn}
+
+\begin{obs}
+En $\RR^n$ sabemos que $A$ es compacto si y sólo si $A$ es cerrado y acotado. Más generalmente, si $X$ es un espacio métrico, $A$ es compacto si y sólo si es totalmente acotado y completo.
+\end{obs}
+
+\begin{prop}
+Sea $X$ un espacio topológico. Son equivalentes:
+\begin{enumerate}
+\item $X$ es compacto.
+\item (Lema del Tubo) Si $Z$ es un espacio topológico, $U\subseteq X\times Z$ abierto y $z_0\in Z$ tal que $X\times \{z_0\}\subseteq U$. Entonces, existe $W\subseteq Z$ abierto con $z_0\in W$ tal que $X\times W\subseteq U$.
+\item Si $Z$ es un espacio topológico, entonces la proyección $\pi:X\times Z\to Z$ es cerrada.
+\item Toda red en $X$ tiene una subred convergente.
+\end{enumerate}
+\begin{proof}
+
+$(1)\Longrightarrow (2)$ Para todo $x\in X$, tenemos que $(x,z_0)\in U$ y así existen abiertos $U_x\subseteq X, V_x\subseteq Z$ tales que $(x,z_0)\in U_x\times V_x\subseteq U$. Entonces, $X = \displaystyle\bigcup_{x\in X} U_x$. Como el espacio es compacto, existe $I\subseteq X$ con $I$ finito tal que $X = \displaystyle\bigcup_{x\in I} U_x$. Además, $W = \displaystyle\bigcap_{x\in I} V_x$ es abierto pues es intersección finita de abiertos. Sea $z\in W$, $x'\in X$. Entonces, existe $x_0\in I$ tal que $x'\in U_{x_0}$. Como $z$ está en la intersección de todos, $z\in V_{x_0}$. Luego, $(x',z)\in U_{x_0}\times V_{x_0}\subseteq W$ y listo.
+
+$(2)\Longrightarrow (3)$ Sea $F\subseteq X\times Z$ cerrado. Quiero ver que $\pi(F)$ es cerrado. Equivalentemente, quiero ver que $\pi(F)^c$ es abierto. Sea $z_0\in \pi(F)^c$. Luego, $X\times\{z_0\}\subseteq F^c$. Por el Lema del Tubo, existe $W_{z_0}$ abierto de $Z$ tal que $z_0\in W_{z_0}$ y $X\times W_{z_0}\subseteq F^c$. Por lo tanto, $W_{z_0}\subseteq \pi(F)^c$ y así $\pi(F)^c = \displaystyle\bigcup_{z_0\in\pi(F)^c} W_{z_0}$, que es abierto por ser unión de abiertos.
+
+$(3)\Longrightarrow(4)$ AGREGARLA LA PROXIMA CLASE.
+
+$(4)\Longrightarrow(1)$ Sea $(F_i)_{i\in I}$ una familia de cerrados que cumple la PIF, es decir, tal que para todo $J\subseteq I$ finito tenemos $\displaystyle\bigcap_{i\in J} F_i \neq \emptyset$. Consideremos $\Lambda=\{J\subseteq I : J\text{ finito}\}$. Definimos un orden en $\Lambda$ por $J_1\leq J_2$ sii $J_1\subseteq J_2$. Para $J\in\Lambda$, definimos $f(J)$ por algún elemento cualquiera de $\displaystyle\bigcap_{i\in J}F_i \neq\emptyset$. Sea $\Lambda'\stackrel{g}{\longrightarrow}\Lambda\stackrel{f}{\longrightarrow}X$ una subred convergente a algún $x_0\in X$. Veamos que $x_0\in\displaystyle\bigcap_{i\in I}F_i$. Supongamos que no. Entonces, existe $i_0\in I$ tal que $x_0\notin F_{i_0}$. Es decir, $x_0\in F_{i_0}^c$, que es abierto. Luego, existe $\alpha_1\in\Lambda'$ tal que si $\beta\geq\alpha_1$ entonces $f\circ g(\beta)\in F_{i_0}^c$. Pero además, $\Lambda'$ es una subred y así $g(\Lambda')$ es cofinal. Esto quiere decir que existe $\alpha_2\in\Lambda'$ tal que $g(\alpha_2)\geq \{i_0\}$. Sea $\alpha_3\geq \alpha_1,\alpha_2$. Esto implica que $f\circ g(\alpha_3)\in F_{i_0}^c$ por ser $\alpha_3\geq \alpha_1$ y además $f\circ g(\alpha_3) \in F_{i_0}$ pues $g(\alpha_3)\geq g(\alpha_2)\geq \{i_0\}$, y así $f(g(\alpha_3))$ es algún elemento de $F_{i_0}$. Absurdo. La proposición sigue.
+
+\end{proof}
+\end{prop}
 
 \end{document}
 
