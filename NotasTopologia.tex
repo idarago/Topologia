@@ -1136,16 +1136,122 @@ Sea $X$ un espacio topológico. Son equivalentes:
 \end{enumerate}
 \begin{proof}
 
-$(1)\Longrightarrow (2)$ Para todo $x\in X$, tenemos que $(x,z_0)\in U$ y así existen abiertos $U_x\subseteq X, V_x\subseteq Z$ tales que $(x,z_0)\in U_x\times V_x\subseteq U$. Entonces, $X = \displaystyle\bigcup_{x\in X} U_x$. Como el espacio es compacto, existe $I\subseteq X$ con $I$ finito tal que $X = \displaystyle\bigcup_{x\in I} U_x$. Además, $W = \displaystyle\bigcap_{x\in I} V_x$ es abierto pues es intersección finita de abiertos. Sea $z\in W$, $x'\in X$. Entonces, existe $x_0\in I$ tal que $x'\in U_{x_0}$. Como $z$ está en la intersección de todos, $z\in V_{x_0}$. Luego, $(x',z)\in U_{x_0}\times V_{x_0}\subseteq W$ y listo.
+$(1)\Longrightarrow (2)$ Para todo $x\in X$, tenemos que $(x,z_0)\in U$ y así existen abiertos $U_x\subseteq X, V_x\subseteq Z$ tales que $(x,z_0)\in U_x\times V_x\subseteq U$. Entonces, $X = \displaystyle\bigcup_{x\in X} U_x$. Como el espacio es compacto, existe $I\subseteq X$ con $I$ finito tal que $X = \displaystyle\bigcup_{x\in I} U_x$. Además, $W = \displaystyle\bigcap_{x\in I} V_x$ es abierto pues es intersección finita de abiertos. Sea $z\in W$, $x'\in X$. Entonces, existe $x_0\in I$ tal que $x'\in U_{x_0}$. Como $z$ está en la intersección de todos, $z\in V_{x_0}$. Luego, $(x',z)\in U_{x_0}\times V_{x_0}\subseteq U$ y listo.
 
 $(2)\Longrightarrow (3)$ Sea $F\subseteq X\times Z$ cerrado. Quiero ver que $\pi(F)$ es cerrado. Equivalentemente, quiero ver que $\pi(F)^c$ es abierto. Sea $z_0\in \pi(F)^c$. Luego, $X\times\{z_0\}\subseteq F^c$. Por el Lema del Tubo, existe $W_{z_0}$ abierto de $Z$ tal que $z_0\in W_{z_0}$ y $X\times W_{z_0}\subseteq F^c$. Por lo tanto, $W_{z_0}\subseteq \pi(F)^c$ y así $\pi(F)^c = \displaystyle\bigcup_{z_0\in\pi(F)^c} W_{z_0}$, que es abierto por ser unión de abiertos.
 
-$(3)\Longrightarrow(4)$ AGREGARLA LA PROXIMA CLASE.
+$(3)\Longrightarrow(4)$ Sea $\Gamma\stackrel{f}{\longrightarrow} X$ una red. Sea $Z=\Gamma\cup\{+\infty\}$ con la topología dada por la base $\{\{\alpha\} : \alpha\in\Gamma\} \cup \{\{\beta\geq\alpha\} \cup \{+\infty\} : \alpha\in\Gamma\}$. Notemos que $A=\pi(\overline{\{(\alpha,f(\alpha)) : \alpha\in \Gamma\}})$ es cerrado por hipótesis. Veamos primero que $+\infty\in A = \overline{A}$. Es decir, que todo abierto que tiene a $+\infty$ corta a $A$. Sea $U$ abierto de $Z$ tal que $+\infty\in U$. Entonces, existe un $\alpha_0\in\Gamma$ tal que $+\infty\in \{\beta\geq \alpha_0\}\cup\{+\infty\}\subseteq U$, lo que implica, a su vez, que tenemos $(\alpha_0,f(\alpha_0))\in \{(\alpha,f(\alpha)) : \alpha\in\Gamma\}\subseteq \overline{\{(\alpha,f(\alpha)) : \alpha\in\Gamma\}}$. Por lo tanto, es claro que $\alpha_0\in A$. Luego, existe $x_0\in X$ tal que $(+\infty,x_0)\in\overline{\{(\alpha,f(\alpha)) : \alpha\in\Gamma\}}$. Consideremos entonces $$\Lambda = \{(\alpha,U) : \alpha\in\Gamma, \; U\subseteq X \text{ abierto tal que }x_0\in U\}$$ ordenado vía $(\alpha_1,U_1)\leq (\alpha_2,U_2)$ sii $\alpha_1\leq \alpha_2$ y $U_2\subseteq U_1$. Es claro que $\Lambda$ es no vacío pues $(\alpha,X)\in\Lambda$ para cualquier $\alpha\in\Gamma$. Notemos que $\Lambda$ es dirigido. En efecto, tomemos $(\alpha_1,U_1),(\alpha_2,U_2)\in\Lambda$. Como $\Gamma$ es dirigido existe $\alpha_3\in\Gamma$ tal que $\alpha_1,\alpha_2\leq\alpha_3$. Como $(+\infty,x_0)\in\overline{\{(\alpha,f(\alpha)):\alpha\in\Gamma\}}$ y $(+\infty,x_0)\in (\{\beta\in\Gamma : \beta\geq\alpha_3\}\cup\{+\infty\})\times (U_1\cap U_2)$, tenemos que existe un $\alpha_4\in\Gamma$ tal que $(\alpha_4,f(\alpha_4))\in (\{\beta\in\Gamma : \beta\geq \alpha_3\} \cup\{+\infty\})\times (U_1\cap U_2)$. Esto implica que $f(\alpha_4)\in U_1\cap U_2$ y $\alpha_4\geq \alpha_3$, y entonces $(\alpha_4,U_1\cap U_2)\geq (\alpha_1,U_1),(\alpha_2,U_2)$. Ahora bien, consideremos la subred $\Lambda\stackrel{g}{\longrightarrow} \Gamma \stackrel{f}{\longrightarrow} X$ con $g(\alpha,U)=\alpha$. Veamos que es de hecho una subred. En efecto, es obvio que $g$ es creciente, pues si $(\alpha_1,U_1)\leq (\alpha_2, U_2)$ entonces trivialmente sigue que $\alpha_1\leq \alpha_2$. Además, es cofinal pues dado $\alpha\in\Gamma$, tengo $g((\alpha,X))\in\Lambda$. Finalmente, veamos que esta subred converge a $x_0$. Sea $U$ un abierto de $X$ tal que $x_0\in U$. Como $(+\infty,x_0)\in (\Gamma\cup \{+\infty\})\times U$, tenemos algún $\alpha_0\in\Gamma$ tal que $(\alpha_0,f(\alpha_0))\in (\Gamma\cup \{+\infty\})\times U$. Es decir, $f(\alpha_0)\in U$. Si $(\alpha_1,U_1)\geq (\alpha_0,U)$, tenemos que $f(g(\alpha_1,U_1)) = f(\alpha_1)\in U_1\subseteq U$. Esto es, $f\circ g(\alpha_1,U_1)\in U$ para todo $(\alpha_1,U_1)\geq (\alpha_0,U)$. Entonces, toda red tiene una subred convergente.
 
 $(4)\Longrightarrow(1)$ Sea $(F_i)_{i\in I}$ una familia de cerrados que cumple la PIF, es decir, tal que para todo $J\subseteq I$ finito tenemos $\displaystyle\bigcap_{i\in J} F_i \neq \emptyset$. Consideremos $\Lambda=\{J\subseteq I : J\text{ finito}\}$. Definimos un orden en $\Lambda$ por $J_1\leq J_2$ sii $J_1\subseteq J_2$. Para $J\in\Lambda$, definimos $f(J)$ por algún elemento cualquiera de $\displaystyle\bigcap_{i\in J}F_i \neq\emptyset$. Sea $\Lambda'\stackrel{g}{\longrightarrow}\Lambda\stackrel{f}{\longrightarrow}X$ una subred convergente a algún $x_0\in X$. Veamos que $x_0\in\displaystyle\bigcap_{i\in I}F_i$. Supongamos que no. Entonces, existe $i_0\in I$ tal que $x_0\notin F_{i_0}$. Es decir, $x_0\in F_{i_0}^c$, que es abierto. Luego, existe $\alpha_1\in\Lambda'$ tal que si $\beta\geq\alpha_1$ entonces $f\circ g(\beta)\in F_{i_0}^c$. Pero además, $\Lambda'$ es una subred y así $g(\Lambda')$ es cofinal. Esto quiere decir que existe $\alpha_2\in\Lambda'$ tal que $g(\alpha_2)\geq \{i_0\}$. Sea $\alpha_3\geq \alpha_1,\alpha_2$. Esto implica que $f\circ g(\alpha_3)\in F_{i_0}^c$ por ser $\alpha_3\geq \alpha_1$ y además $f\circ g(\alpha_3) \in F_{i_0}$ pues $g(\alpha_3)\geq g(\alpha_2)\geq \{i_0\}$, y así $f(g(\alpha_3))$ es algún elemento de $F_{i_0}$. Absurdo. La proposición sigue.
 
 \end{proof}
 \end{prop}
+
+\begin{lem}
+Unión finita de compactos es compacto.
+\begin{proof}
+Esto es obvio pues un cubrimiento de todo es un cubrimiento de cada compacto y así tomo un subcubrimiento finito de cada compacto y los uno.
+\end{proof}
+\end{lem}
+
+\begin{prop}
+Sea $X$ compacto y $A\subseteq X$ cerrado. Entonces, $A$ es compacto.
+\begin{proof}
+Supongamos que $A\subseteq \displaystyle\bigcup_{i\in I}U_i$ con $(U_i)_{i\in I}$ abiertos. Entonces, $X=\displaystyle\bigcup_{i\in I}U_i \cup A^c$ es un cubrimiento por abiertos de $X$. Como $X$ es compacto, tiene un subcubrimiento finito: es decir, existe $I'\subseteq I$ finito tal que $X = \displaystyle\bigcup_{i\in I'}U_i \cup A^c$. Esto es, $A\subseteq \displaystyle\bigcup_{i\in I'} U_i$. La proposición sigue.
+\end{proof}
+\end{prop}
+
+\begin{lem}
+Sea $X$ un espacio $\mathrm{T}_2$ y $A\subseteq X$ un compacto. Entonces, si $x\in X$ con $x\notin A$, existen abiertos disjuntos $U,V\subseteq X$ tales que $x\in U$ y $A\subseteq V$.
+\begin{proof}
+Sea $y\in A$. Como el espacio es $\mathrm{T}_2$, existen abiertos $U_y,V_y\subseteq X$ disjuntos tales que $x\in U_y$ y $y\in V_y$. Entonces, $A\subseteq \displaystyle\bigcup_{y\in A}V_y$. Como $A$ es compacto, existe un subcubrimiento finito $A\subseteq \displaystyle\bigcup_{y\in I}V_y = V$ con $I\subseteq A$ finito. Como $V$ es unión de abiertos, es abierto. Además, si $U=\displaystyle\bigcap_{y\in I} U_y$, tenemos que es abierto por ser intersección finita de abiertos. Tenemos entonces que $x\in U$ y $A\subseteq V$. Resta ver que $U$ y $V$ disjuntos. Pero en efecto, si $z\in U\cap V$, existe algún $i_0\in I$ tal que $z\in V_{i_0}$. Como $U_{i_0}\cap V_{i_0}=\emptyset$, tenemos que $z\notin U_{i_0}$ y así $z\notin U$. Absurdo. Entonces $U,V$ nos dan la separación que buscamos.
+\end{proof}
+\end{lem}
+
+\begin{cor}
+En un espacio $\mathrm{T}_2$, si tengo un subconjunto compacto es cerrado.
+\begin{proof}
+Quiero ver que $A^c$ es abierto. Sea $x\in A^c$. Por el lema anterior, tengo abiertos disjuntos $U_x,V_x\subseteq X$ que separan a $x$ y el compacto. Es decir, $x\in U_x$ y $A\subseteq V_x$. Entonces, $A^c = \displaystyle\bigcup_{x\in A^c} U_x$, que es abierto por ser unión de abiertos. Como queríamos.
+\end{proof}
+\end{cor}
+
+\begin{cor}
+Sea $X$ un espacio $\mathrm{T}_2$. Entonces, la intersección de compactos es compacta.
+\begin{proof}
+Sea $(F_i)_{i\in I}\subseteq X$ una familia de compactos. Como $X$ es $\mathrm{T}_2$, cada $F_i$ es cerrado y así la intersección $\displaystyle\bigcap_{i\in I}F_i$ es cerrado. Pero $\displaystyle\bigcap_{i\in I}F_i \subseteq F_{i_0}$ es cerrado en un compacto y así compacto. Y listo.
+\end{proof}
+\end{cor}
+
+\begin{lem}
+Sea $X$ un espacio $\mathrm{T}_2$ y sean $A,B\subseteq X$ compactos disjuntos. Entonces, existen $U,V$ abiertos disjuntos que separan a $A$ y $B$.
+\begin{proof}
+Para cada $y\in B$, $y\notin A$, tenemos abiertos $U_y,V_y\subseteq X$ abiertos disjuntos tales que $y\in V_y$, $A\subseteq U_y$. Ahora, $B\subseteq\displaystyle\bigcup_{y\in B} V_y$. Entonces, como $B$ es compacto, existe $I\subseteq B$ finito con $B\subseteq\displaystyle\bigcup_{y\in I}V_y = V$, que es abierto por ser unión de abiertos. Tomo entonces $U=\displaystyle\bigcap_{y\in I}U_y$, que es abierto por ser una intersección finita de abiertos. Por lo tanto, tenemos $A\subseteq U$ y $B\subseteq V$. Además, son disjuntos, pues si $z\in U\cap V$, tenemos que $z\in V_{i_0}$ para algún $i_0\in I$ y como $U_{i_0}\cap V_{i_0}=\emptyset$, tenemos que $z\notin U_{i_0}$ y menos va a ser $z\in U$. Y estamos.
+\end{proof}
+\end{lem}
+
+\begin{cor}
+Sea $X$ un espacio $\mathrm{T}_2$ y compacto. Entonces, $X$ es $\mathrm{T}_4$.
+\begin{proof}
+Es claro que $X$ es $\mathrm{T}_1$ pues es $\mathrm{T}_2$. Ahora, es normal pues si $A,B\subseteq X$ son cerrados disjuntos, en particular deben ser compactos disjuntos (pues son cerrados en un compacto). Luego, existen $U,V$ abiertos disjuntos que los separan por el lema anterior.
+\end{proof}
+\end{cor}
+
+\begin{lem}
+Sea $f:X\to Y$ continua y $A\subseteq X$ compacto. Entonces $f(A)$ es compacto.
+\begin{proof}
+Sea $f(A)\subseteq \displaystyle\bigcup_{i\in I}U_i$ un cubrimiento por abiertos. Entonces, $A\subseteq\displaystyle\bigcup_{i\in I}f^{-1}(U_i)$, que son abiertos por ser preimagenes de abiertos. Como $A$ es compacto, tiene un subcubrimiento finito. Es decir, $I'\subseteq I$ finito tal que $A\subseteq\displaystyle\bigcup_{i\in I'}f^{-1}(U_i)$.  Luego, $f(A)\subseteq\displaystyle\bigcup_{i\in I'} U_i$. Como queríamos probar.
+\end{proof}
+\end{lem}
+
+\begin{cor}
+Sea $f:X\to Y$ continua con $X$ un espacio compacto, $Y$ un espacio $\mathrm{T}_2$. Entonces $f$ es cerrada.
+\begin{proof}
+Sea $A\subseteq X$ cerrado. Entonces, $A$ es compacto. Como $f$ es continua, $f(A)$ es compacto, y como $Y$ es $\mathrm{T}_2$, es cerrado. Como queríamos.
+\end{proof}
+\end{cor}
+
+\begin{cor}[Greatest Trick in Elementary Topology]
+Sea $f:X\to Y$ continua y biyectiva con $Y$ un espacio $\mathrm{T}_2$ y $X$ compacto. Entonces $f$ es un homeomorfismo.
+\begin{proof}
+Notemos que $f$ es biyectiva, continua, y por el corolario anterior, cerrada. Entonces es homeomorfismo y listo.
+\end{proof}
+\end{cor}
+
+\begin{teo}[Tychonoff]
+Sea $(X_i)_{i\in I}$ una familia de espacios compactos. Entonces, $X=\displaystyle\prod_{i\in I}X_i$ es compacto.
+\begin{proof}
+Sea $(F_j)_{j\in J}$ una familia de cerrados en $X$ que cumple la Propiedad de Intersección finita. Quiero ver que la intersección $\displaystyle\bigcap_{i\in I}F_i$ es no vacía.
+
+Consideremos $\Lambda = \{(G_j)_{j\in J'} : G_j\subseteq X, \; (F_j)_{j\in J}\subseteq (G_j)_{j\in J'}\text{ y } (G_j)_{j\in J'}\text{ cumple la PIF}\}$. Es claro que $\Lambda$ es no vacío pues la familia $(F_j)_{j\in J}$ está en $\Lambda$. Además, es claro que $\Lambda$ se ordena por la inclusión. Ahora bien, cualquier cadena tiene una cota superior: su unión. En efecto, es fácil ver que tiene a $(F_j)_{j\in J}$ pues cada elemento de la unión lo tiene, lo único que hay que ver es que se cumple la propiedad de intersección finita. Pero si tomamos una intersección finita de esta unión, tomamos el que tenga índice mayor en la cadena y la unión nos da ese, que cumple la PIF.
+
+Entonces, por el Lema de Zorn, existe algún elemento maximal $(G_j)_{j\in J'}$ en $\Lambda$. Veamos que una familia maximal respecto de la propiedad de intersección finita cumple dos propiedades:
+
+\begin{itemize}
+\item La intersección finita de elementos de una familia maximal está en la familia maximal.
+\item Si $U\subseteq X$ tiene intersección no vacía con todo elemento de la familia maximal, entonces está en la familia maximal.
+\end{itemize}
+
+Para ver la primera propiedad, sea $B$ la intersección de finitos elementos de una familia $(G_j)_{j\in J'}$ maximal respecto de la Propiedad de Intersección Finita. Consideremos la familia que resulta de agregarle $B$ a la familia $(G_j)_{j\in J'}$. Veamos que esta familia cumple la PIF, que resultará absurdo salvo que $B$ esté en la familia $(G_j)_{j\in J'}$. Si tomamos finitos elementos de esta familia entre los cuales ninguno es $B$ es obvio pues solo estamos tomando finitos elementos de la familia original. Ahora, si alguno es $B$, entonces la intersección finita $B\cap G_{j_1} \cap\ldots \cap G_{j_r}$ es no vacía pues como $B$ es una intersección finita de los $(G_j)_{j\in J'}$, tenemos que todo eso es una intersección finita de los $(G_j)_{j\in J'}$.
+
+Para ver la segunda propiedad, consideremos la familia $\{U\}\cup (G_j)_{j\in J'}$. Veamos que esta familia tiene la PIF, de donde $U$ estará contenido en $(G_j)_{j\in J'}$. Tomemos finitos elementos en esta familia. Si no incluímos al $U$ es obvio que la intersección es no vacía (simplemente es que la PIF vale para $(G_j)_{j\in J'}$). Si no, tenemos $U\cap G_{j_1}\cap\ldots \cap G_{j_r}$. Pero por la primera propiedad, tenemos que $G_{j_1}\cap\ldots \cap G_{j_r} = G_{j_0}$ y así $U\cap G_{j_0}\neq\emptyset$ por suposición.
+
+Consideremos, para cada $i\in I$ las familias de cerrados $(\overline{\pi_i(G_j)})_{j\in J'}\subseteq X_i$. Notemos que tienen la PIF porque $(G_j)_{j\in J'}$ la tiene. En efecto, si $S\subseteq J'$ es finito, entonces $$\displaystyle\bigcap_{j\in S}\overline{\pi_i(G_j)}\supseteq \displaystyle\bigcap_{j\in S} \pi_i(G_j) \supseteq \pi_j \left(\bigcap_{j\in S}G_j\right)$$ Como $X_i$ es compacto, existe $x_i\in\displaystyle\bigcap_{j\in J'}\overline{\pi_i(G_j)}$ (por la PIF). Tomo entonces $x=(x_i)_{i\in I}$. Quiero ver que $x\in\displaystyle\bigcap_{j\in J'}\overline{G_j}$. En efecto, esto bastará pues en particular tendremos $x\in \displaystyle\bigcap_{j\in J} \overline{F_j} = \displaystyle\bigcap_{j\in J} F_j$ y así la intersección será no vacía.
+
+Para ver esto, sea $j_0\in J'$. Quiero ver que $x\in \overline{G_{j_0}}$. Sea $U\subseteq X$ un abierto con $x\in U$. Existe $I'\subseteq I$ finito y abiertos $U_i\subseteq X_i$ para cada $i\in I'$ con $x\in\displaystyle\bigcap_{i\in I'} \pi_i^{-1}(U_i)\subseteq U$. Veamos que $\pi_i^{-1}(U_i)\in (G_j)_{j\in J'}$, pues esto implicará que $\displaystyle\bigcap_{i\in I'}\pi_i^{-1}(U_i)\cap G_{j_0}\neq\emptyset$ por la segunda propiedad de la familia maximal respecto de la PIF. Sean $j\in J'$, $i\in I'$. Quiero ver que $\pi_i^{-1}(U_i)\cap G_j\neq\emptyset$. Como $x_i\in U_i$ y $x_i\in \pi_{i}(\overline{G_j})$, existe $y_i\in U_i\cap \pi_i(G_j)$. Cuando tomo preimagen, $\pi_i^{-1}(U_i)\cap G_j\neq\emptyset$. Esto prueba lo que queríamos. Y estamos.
+
+\end{proof}
+\end{teo}
+
+\begin{lem}
+Sea $S$ un conjunto bien ordenado con elemento máximo.  Entonces $S$ es compacto.
+\begin{proof}
+Supogamos que $S=\displaystyle\bigcup_{i\in I} U_i$ es un cubrimiento por abiertos. Sea $a_0$ el primer elemento de $S$. Sea $A=\{z\in S : (-\infty,z]\text{ no puede cubrirse con finitos de los }U_i\}$. Si $S$ no tiene ningún subcubrimiento finito, entonces $A$ es no vacío (pues el elemento máximo de $S$ está) y así tiene primer elemento $y\in A$. Existe $i_0\in I$ tal que $y\in U_{i_0}$. Entonces, existen $y_1,y_2\in S$ tales que $y\in (y_1,y_2)\subseteq U_{i_0}$. Pero $y_1<y$ y así $y_1\notin A$ (sutileza: si $y_1=-\infty$, tomo $y_1=a_0$ el primer elemento de $S$). Luego, existe $I'\subseteq I$ finito tal que $(-\infty,y_1]\subseteq \displaystyle\bigcup_{i\in I'} U_i$. Pero entonces $(-\infty,y]\subseteq \displaystyle\bigcup_{i\in I'}U_i \cup U_{i_0}$. Por lo tanto, $y\notin A$. Absurdo.
+\end{proof}
+\end{lem}
+
+\begin{obs}
+Esto nos permite formalizar el ejemplo que teníamos de subespacio de normal no necesariamente es normal.
+\end{obs}
 
 \end{document}
 
